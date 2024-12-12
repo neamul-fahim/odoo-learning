@@ -1,0 +1,29 @@
+<odoo>
+    <template id="vendor_details_wizard_template">
+        <div class="container"
+             style="display:flex; flex-direction:column; justify-content:center; align-items:center; padding-top: 60px;">
+            <div class="form-container" style="background-color:#fffff;padding: 20px; border-radius: 10px;">
+
+                <form action="/vendor_details_form" method="POST" style="display:flex; flex-direction:column; gap:10px">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <input type="hidden" t-att-value="record_id"/>
+                    <label for="name" >Name:</label>
+                    <input type="text" id="name" name="name" t-att-value="vendor.name if vendor else ''" required="True" style="width:300px; height:40px; font-size:20px"/>
+                    <label for="contact_number">Contact Number:</label>
+                    <input type="text" id="contact_number" name="contact_number"
+                           t-att-value="vendor.contact_number if vendor else ''" required="True" style="width:300px; height:40px; font-size:20px"/>
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" required="True" style="width:300px; height:200px; font-size:20px">
+                        <t t-esc="vendor.address if vendor else ''"/>
+                    </textarea>
+                    <label for="company_name">Company Name:</label>
+                    <input type="text" id="company_name" name="company_name"
+                           t-att-value="vendor.company_name if vendor else ''" required="True" style="width:300px; height:40px; font-size:20px"/>
+
+                    <button type="submit" class="btn btn-primary" style="height:40px; font-size:20px">Confirm</button>
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </template>
+</odoo>

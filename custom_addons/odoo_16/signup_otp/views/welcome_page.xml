@@ -1,0 +1,10 @@
+<odoo>
+<template id="welcome_page" name="Welcome Page">
+    <t t-call="web.layout">
+        <div class="container">
+            <h2>Welcome!</h2>
+            <p>Your email has been successfully verified.</p>
+        </div>
+    </t>
+</template>
+</odoo>

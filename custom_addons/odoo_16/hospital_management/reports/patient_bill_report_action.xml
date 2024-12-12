@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="action_patient_bill_report" model="ir.actions.report">
+            <field name="name">Patient Bill</field>
+            <field name="model">hospital.patient.bill</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hospital_management.patient_bill_report_template</field>
+            <field name="report_file">hospital_management.patient_bill_report_template</field>
+            <field name="binding_model_id" ref="model_hospital_patient_bill"/>
+<!--            <field name="binding_type">report</field>-->
+        </record>
+    </data>
+</odoo>
+

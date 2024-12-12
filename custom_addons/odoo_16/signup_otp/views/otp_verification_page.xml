@@ -1,0 +1,20 @@
+<odoo>
+    <template id="otp_verification_page" name="OTP Verification Page">
+        <t t-call="web.layout">
+            <div class="container">
+                <h2>Verify OTP</h2>
+                <form action="/verify_otp" method="POST">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <label for="otp">Enter OTP:</label>
+                    <input type="text" name="otp" required="True" placeholder="Enter OTP"/>
+                    <input type="hidden" name="signup_request_id" t-att-value="signup_request_id"/>
+                    <button type="submit">Verify</button>
+                </form>
+                <p t-if="error" class="text-danger">
+                    <t t-esc="error"/>
+                </p>
+            </div>
+        </t>
+    </template>
+</odoo>

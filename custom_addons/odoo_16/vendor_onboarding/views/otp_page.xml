@@ -1,0 +1,20 @@
+<odoo>
+    <template id="otp_page">
+        <div class="container"
+             style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:40vh">
+            <h1>Verify OTP</h1>
+            <form action="/otp_verification" method="POST" style="display:flex; flex-direction:column; gap:10px">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <input type="text" name="email" t-att-value="email" readonly="True"
+                       style="width:300px; height:40px; font-size:20px; border:none; outline:none"/>
+                <input type="hidden" name="record_id" t-att-value="record_id"/>
+                <input type="text" name="otp-code" required="True" placeholder="Enter OTP"
+                       style="width:300px; height:40px; font-size:20px"/>
+                <button type="submit" style="height:40px; font-size:20px">Submit</button>
+            </form>
+             <p t-if="error" class="text-danger">
+                    <t t-esc="error"/>
+                </p>
+        </div>
+    </template>
+</odoo>

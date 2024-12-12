@@ -1,0 +1,14 @@
+<odoo>
+    <template id="otp_email_template" name="OTP Email Template">
+        <t t-call="mail.email_notification">
+            <div>
+                <h2>Your OTP Code</h2>
+                <p>Hello,</p>
+                <p>Thank you for signing up. Your OTP code is: <strong><t t-esc="object.otp"/></strong></p>
+                <p>This OTP will expire in 2 minutes.</p>
+                <p>Best regards,</p>
+                <p>Your Company</p>
+            </div>
+        </t>
+    </template>
+</odoo>
