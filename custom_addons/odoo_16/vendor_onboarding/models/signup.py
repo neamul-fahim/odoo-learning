@@ -9,7 +9,9 @@ class Signup(models.Model):
     _name = 'signup'
     _description = 'Vendor signup'
 
+    name = fields.Char(string='Name', required=True)
     email = fields.Char(string='Email', required=True)
+    # password = fields.Char(string='Password Hash')
     otp = fields.Char(string='OTP', required=True)
     otp_expiration = fields.Datetime(String='OTP expiration', default=lambda self: datetime.now() + timedelta(minutes=3))
 
@@ -21,8 +23,9 @@ class Signup(models.Model):
         """
 
         email = vals.get('email')
-        if not email:
-            raise UserError('Required Email')
+        name = vals.get('name')
+        if not email or not name:
+            raise UserError('Required Email and Name')
 
         record= self.search([('email','=',email)], limit=1)
 
@@ -39,6 +42,17 @@ class Signup(models.Model):
 
         self.send_email(record)
         return record
+
+    # def set_password(self, record_id, password):
+    #     record = self.sudo().browse(record_id)
+    #     if not record:
+    #         raise UserError("Signup record not found.")
+    #
+    #     user = self.env['res.users'].sudo().search([('login', '=', record.email)], limit=1)
+    #     if not user:
+    #         raise UserError("No user found with the given email.")
+    #
+    #     user.sudo().write({'password': password})
 
     def send_email(self,record):
         body_html = f"""

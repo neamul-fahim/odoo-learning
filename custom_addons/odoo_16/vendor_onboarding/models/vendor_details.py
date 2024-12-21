@@ -11,7 +11,7 @@ class VendorDetails(models.TransientModel):
     contact_number = fields.Char(string='Contact number', required=True)
     address = fields.Text(string='Address', required=True)
     company_name = fields.Char(string='Company name', required=True)
-    signup_id = fields.Many2many('signup', string='Signup record', required=True)
+    signup_id = fields.Many2one('signup', string='Signup record', required=True)
     state = fields.Selection([
         ('draft','Draft'),
         ('in_review','In Review'),
@@ -24,6 +24,7 @@ class VendorDetails(models.TransientModel):
 
     @api.model
     def create(self, vals):
+        print(f'signup_id ---------------------------{vals["signup_id"]}')
         record=super(VendorDetails, self).create(vals)
         record.submit_for_review()
         return record

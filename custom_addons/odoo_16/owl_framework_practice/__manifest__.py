@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "vendor_onboarding",
+    'name': "owl_framework_practice",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -24,22 +24,19 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
-        'security/security.xml',
-        'views/otp_page.xml',
-        'views/signup_page.xml',
-        'views/welcome_page.xml',
-        'views/vendor_details_form.xml',
-        'views/vendor_details_portal_form.xml',
-        'views/all_vendor_accounts_portal_tree_view.xml',
-        'views/vendor_onboarding_view.xml',
-        'views/set_password_page.xml',
-        'views/portal.xml',
+        # 'security/ir.model.access.csv',
         'views/views.xml',
-        'views/menu.xml',
+        'views/templates.xml',
+        # 'views/click_counter.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
+    'assets': {
+        'web.assets_frontend': [
+        '/owl_framework_practice/static/src/js/main.js',
+        '/owl_framework_practice/static/src/js/click_counter.js',
+        ],
+    },
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<!--    for portal user-->
+    <template id="portal_my_home_vendor_account" name="Vendor Account"  inherit_id="portal.portal_my_home" >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Vendor Account</t>
+                <t t-set="url" t-value="'/my/vendor_account'"/>
+                <t t-set="placeholder_count" t-value="'vendor_count'"/>
+            </t>
+        </xpath>
+    </template>
+
+<!--    for internal user-->
+    <template id="portal_my_home_all_vendor_accounts" name="All Vendor Accounts"  inherit_id="portal.portal_my_home" >
+    <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+        <t t-if="request.env.user.has_group('base.group_user')">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">All Vendor Accounts</t>
+                <t t-set="url" t-value="'/my/all_vendor_accounts'"/>
+                <t t-set="placeholder_count" t-value="'all_vendor_counts'"/>
+            </t>
+        </t>
+    </xpath>
+</template>
+
+
+</odoo>

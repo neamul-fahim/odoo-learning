@@ -6,7 +6,7 @@
 
                 <form action="/vendor_details_form" method="POST" style="display:flex; flex-direction:column; gap:10px">
                     <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                    <input type="hidden" t-att-value="record_id"/>
+                    <input type="hidden" name="record_id" t-att-value="record_id"/>
                     <label for="name" >Name:</label>
                     <input type="text" id="name" name="name" t-att-value="vendor.name if vendor else ''" required="True" style="width:300px; height:40px; font-size:20px"/>
                     <label for="contact_number">Contact Number:</label>
