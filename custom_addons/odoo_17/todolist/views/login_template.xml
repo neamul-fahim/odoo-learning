@@ -1,0 +1,39 @@
+<odoo>
+    <template id="login_template" name="Login">
+        <div style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: Arial, sans-serif; background: white;">
+            <div style="background-color: white; padding: 30px 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 100%; max-width: 400px; text-align: center;">
+                <!-- Page Title -->
+                <h1 style="margin-bottom: 20px; color: #333; font-size: 1.8rem; font-weight: bold;">Login</h1>
+
+                <!-- Error Message -->
+                <t t-if="error">
+                    <p style="color: #d9534f; margin-bottom: 20px; font-size: 0.9rem; font-weight: bold;">
+                        <t t-esc="error" />
+                    </p>
+                </t>
+
+                <!-- Login Form -->
+                <form method="POST" action="/todo/login" style="display: flex; flex-direction: column; gap: 15px;">
+                    <!-- Email Field -->
+                    <input type="email" name="email" placeholder="Email" required="required"
+                        style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; width: 100%; box-sizing: border-box;"/>
+
+                    <!-- Password Field -->
+                    <input type="password" name="password" placeholder="Password" required="required"
+                        style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1rem; width: 100%; box-sizing: border-box;"/>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        style="background-color: blue; color: white; padding: 12px; font-size: 1rem; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s;">
+                        Login
+                    </button>
+                </form>
+
+                <!-- Additional Links -->
+                <p style="margin-top: 15px; font-size: 0.9rem; color: #555;">
+                    Don't have an account? <a href="/todo/signup" style="color: #ff7e5f; text-decoration: none; font-weight: bold;">Sign up here</a>
+                </p>
+            </div>
+        </div>
+    </template>
+</odoo>

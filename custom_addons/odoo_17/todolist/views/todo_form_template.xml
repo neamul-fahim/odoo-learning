@@ -1,0 +1,53 @@
+<odoo>
+    <template id="task_form" name="Task Form">
+        <form action="/todo/task/save" method="POST" style="margin: 50px auto; max-width: 600px; font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+            <!-- Hidden Input for Task ID -->
+            <t t-if="task">
+                <input type="hidden" name="task_id" t-att-value="task.id"/>
+            </t>
+
+            <!-- Task Name Field -->
+            <div style="margin-bottom: 20px;">
+                <label for="name" style="display: block; font-weight: bold; margin-bottom: 5px; color: #333;">Task Name:</label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    t-att-value="task.name if task else ''"
+                    required="True"
+                    style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 5px; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);"/>
+            </div>
+
+            <!-- Description Field -->
+            <div style="margin-bottom: 20px;">
+                <label for="description" style="display: block; font-weight: bold; margin-bottom: 5px; color: #333;">Description:</label>
+                <textarea
+                    name="description"
+                    id="description"
+                    style="width: 100%; padding: 10px; font-size: 1rem; border: 1px solid #ddd; border-radius: 5px; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); min-height: 100px;"><t t-esc="task.description if task else ''"/></textarea>
+            </div>
+
+            <!-- Is Done Checkbox -->
+            <div style="margin-bottom: 20px;">
+                <label for="is_done" style="font-weight: bold; color: #333;">
+                    <input
+                        type="checkbox"
+                        name="is_done"
+                        id="is_done"
+                        t-att-checked="task.is_done if task else False"
+                        style="margin-right: 10px;"/>
+                    Mark as Done
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <div style="text-align: center;">
+                <button
+                    type="submit"
+                    style="background-color: #007bff; color: white; padding: 10px 20px; font-size: 1rem; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);">
+                    Save Task
+                </button>
+            </div>
+        </form>
+    </template>
+</odoo>

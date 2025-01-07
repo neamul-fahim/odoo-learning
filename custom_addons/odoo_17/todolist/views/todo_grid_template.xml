@@ -1,0 +1,64 @@
+<odoo>
+    <template id="todo_grid" name="Todo Grid">
+        <div style="margin: 50px auto; max-width: 900px; font-family: Arial, sans-serif;">
+            <!-- Header Section -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1 style="font-size: 2.5rem; color: #333; text-shadow: 1px 1px 3px #aaa;">Your Tasks</h1>
+                <a href="/todo/task/save"
+                   style="background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);">
+                    Create New Task
+                </a>
+            </div>
+
+            <!-- Task Table -->
+            <table style="width: 100%; border-collapse: collapse; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <thead>
+                    <tr style="background-color: #343a40; color: white; text-align: left;">
+                        <th style="padding: 10px;">Name</th>
+                        <th style="padding: 10px; text-align: center;">Done</th>
+                        <th style="padding: 10px; text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-if="len(tasks) > 0">
+                        <t t-foreach="tasks" t-as="task">
+                            <tr style="background-color: #f8f9fa; border-bottom: 1px solid #ddd;">
+                                <td style="padding: 10px;">
+                                    <t t-esc="task.name"/>
+                                </td>
+                                 <td style="padding: 10px; text-align: center;">
+                                    <form action="/todo/task/save" method="POST">
+                                        <input type="hidden" name="task_id" t-att-value="task.id"/>
+                                        <input type="checkbox" name="is_done"
+                                               t-att-checked="task.is_done"
+                                               onchange="this.form.submit()"
+                                               style="transform: scale(1.5); cursor: pointer;"/>
+                                    </form>
+                                </td>
+                                <td style="padding: 10px; text-align: center;">
+                                    <a t-att-href="'/todo/task/%d' % task.id"
+                                       style="background-color: #ffc107; color: black; padding: 5px 15px; text-decoration: none; border-radius: 3px; margin-right: 5px; font-weight: bold; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+                                        Edit
+                                    </a>
+                                    <a t-att-href="'/todo/task/delete/%d' % task.id"
+                                       style="background-color: #dc3545; color: white; padding: 5px 15px; text-decoration: none; border-radius: 3px; font-weight: bold; box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+                                        Delete
+                                    </a>
+                                </td>
+
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td colspan="3"
+                                style="padding: 20px; text-align: center; color: #6c757d; font-style: italic;">
+                                No tasks found
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </template>
+</odoo>
