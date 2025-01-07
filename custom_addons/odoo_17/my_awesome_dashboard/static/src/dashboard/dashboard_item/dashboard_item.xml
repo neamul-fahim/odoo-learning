@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="my_awesome_dashboard.ProjectList">
+        <!-- Display projects list -->
+        <div class="d-flex flex-wrap gap-3">
+            <t t-if="props.all_projects.length">
+                    <t t-foreach="props.all_projects" t-as="project" t-key="project.id">
+                        <ProjectCard project="project"></ProjectCard>
+                    </t>
+            </t>
+            <t t-else="">
+                <p>No projects found.</p>
+            </t>
+        </div>
+    </t>
+</templates>

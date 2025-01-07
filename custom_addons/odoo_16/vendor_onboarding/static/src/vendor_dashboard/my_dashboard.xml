@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="my_awesome_dashboard.MyAwesomeDashboard">
+        <Layout display="display" className="'o_dashboard h-100'">
+
+            <!-- Display projects list -->
+            <t t-if="all_projects.value.length">
+            <ProjectList all_projects="all_projects.value"/>
+            </t>
+            <t t-else="">
+            <p>No projects found.</p>
+            </t>
+        </Layout>
+
+    </t>
+</templates>

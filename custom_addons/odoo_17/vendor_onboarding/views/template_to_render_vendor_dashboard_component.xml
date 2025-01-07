@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="vendor_dashboard_template">
+            <html>
+                <head>
+                    <t t-call-assets="web.assets_frontend" />
+                </head>
+                <body>
+                    <p>vendor template</p>
+                    <owl-component name="vendor_onboarding.test_dashboard"/>
+                </body>
+            </html>
+
+    </template>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    <record model="ir.actions.client" id="dashboard">
+      <field name="name">Dashboard</field>
+      <field name="tag">my_awesome_dashboard.dashboard</field>
+    </record>
+
+    <record model="ir.actions.client" id="global_or_shared_state">
+      <field name="name">Dashboard</field>
+      <field name="tag">my_awesome_dashboard.global_or_shared_state_owl_component</field>
+    </record>
+
+    <menuitem name="My Awesome Dashboard" id="my_awesome_dashboard.menu_root" groups="base.group_user" web_icon="awesome_dashboard,static/description/icon.png"/>
+    <menuitem name="My Dashboard" id="my_awesome_dashboard.dashboard_menu" parent="my_awesome_dashboard.menu_root" action="my_awesome_dashboard.dashboard" sequence="1"/>
+    <menuitem name="Global or Shared state" id="my_awesome_dashboard.global_or_shared_state_menu" parent="my_awesome_dashboard.menu_root" action="my_awesome_dashboard.global_or_shared_state" sequence="2"/>
+  </data>
+</odoo>

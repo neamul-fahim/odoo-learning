@@ -34,10 +34,17 @@
         'views/all_vendor_accounts_portal_tree_view.xml',
         'views/vendor_onboarding_view.xml',
         'views/set_password_page.xml',
+        'views/vendor_dashboard.xml',
         'views/portal.xml',
         'views/views.xml',
         'views/menu.xml',
+        'views/template_to_render_vendor_dashboard_component.xml',
     ],
+    'assets': {
+        'web.assets_frontend': [
+            'vendor_onboarding/static/src/vendor_dashboard/**/*',
+        ],
+    },
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',

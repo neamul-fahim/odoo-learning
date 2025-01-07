@@ -1,0 +1,39 @@
+<odoo>
+    <template id="all_vendor_accounts_portal_tree_view" name="All Vendor Accounts">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">All Vendors Account</t>
+            </t>
+
+            <t t-if="vendor_counts" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th class="text-start">Name</th>
+                        <th class="text-end">Contact Number</th>
+                        <th class="text-end">Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="vendor_counts" t-as="vendor_count">
+                        <tr>
+                            <td>
+                                <a t-attf-href="/my/vendor_account_pending/{{vendor_count.id}}">
+                                    <t t-out="vendor_count.name"/>
+                                </a>
+                            </td>
+                            <td class="text-end">
+                                <t t-out="vendor_count.contact_number"/>
+                            </td>
+                            <td class="text-end">
+                                <t t-out="vendor_count.address"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+            <p t-else="">There are currently no vendor accounts for approval.</p>
+        </t>
+    </template>
+</odoo>

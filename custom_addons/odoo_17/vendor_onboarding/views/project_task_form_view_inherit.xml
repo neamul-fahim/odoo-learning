@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <!-- Inherit the existing project.task form view -->
+        <record id="view_project_task_form_inherit_portal" model="ir.ui.view">
+            <field name="name">project.task.form.inherit.portal</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/> <!-- Existing view to inherit -->
+            <field name="arch" type="xml">
+                <!-- Locate the position before which you want to insert your custom field -->
+                <xpath expr="//field[@name='tag_ids']" position="before">
+                    <field name="portal_user_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

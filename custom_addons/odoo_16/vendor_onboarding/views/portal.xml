@@ -2,15 +2,39 @@
 
 <odoo>
 <!--    for portal user-->
+
+         <!--  vendor account approval status  -->
     <template id="portal_my_home_vendor_account" name="Vendor Account"  inherit_id="portal.portal_my_home" >
         <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
-            <t t-call="portal.portal_docs_entry">
-                <t t-set="title">Vendor Account</t>
-                <t t-set="url" t-value="'/my/vendor_account'"/>
-                <t t-set="placeholder_count" t-value="'vendor_count'"/>
+            <t t-if="request.env.user.has_group('base.group_portal')">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Vendor Account</t>
+                    <t t-set="url" t-value="'/my/vendor_account'"/>
+                    <t t-set="placeholder_count" t-value="'vendor_count'"/>
+                </t>
             </t>
         </xpath>
     </template>
+
+
+    <template id="portal_my_home_vendor_dashboard" name="Vendor Dashboard"  inherit_id="portal.portal_my_home" >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="request.env.user.has_group('base.group_portal')">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Vendor Dashboard</t>
+                    <t t-set="url" t-value="'/my/vendor_dashboard'"/>
+                    <t t-set="placeholder_count" t-value="'vendor_dashboard'"/>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+<!--    <template id="portal_my_home_vendor_dashboard" inherit_id="portal.portal_my_home">-->
+<!--        <xpath expr="//*[hasclass('o_portal_my_home')]" position="before">-->
+<!--            <owl-component name="vendor_onboarding.vendor_dashboard" />-->
+<!--        </xpath>-->
+<!--    </template>-->
+
 
 <!--    for internal user-->
     <template id="portal_my_home_all_vendor_accounts" name="All Vendor Accounts"  inherit_id="portal.portal_my_home" >

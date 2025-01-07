@@ -1,0 +1,6 @@
+<odoo>
+    <template id="vendor_dashboard">
+        <p> vendor dashboard</p>
+    </template>
+
+</odoo>

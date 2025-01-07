@@ -1,0 +1,60 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+<!--
+    <record model="ir.ui.view" id="api__jwt.list">
+      <field name="name">API_JWT list</field>
+      <field name="model">api__jwt.api__jwt</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+-->
+
+    <!-- actions opening views on models -->
+<!--
+    <record model="ir.actions.act_window" id="api__jwt.action_window">
+      <field name="name">API_JWT window</field>
+      <field name="res_model">api__jwt.api__jwt</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+-->
+
+    <!-- server action to the one above -->
+<!--
+    <record model="ir.actions.server" id="api__jwt.action_server">
+      <field name="name">API_JWT server</field>
+      <field name="model_id" ref="model_api__jwt_api__jwt"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": model._name,
+        }
+      </field>
+    </record>
+-->
+
+    <!-- Top menu item -->
+<!--
+    <menuitem name="API_JWT" id="api__jwt.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="api__jwt.menu_1" parent="api__jwt.menu_root"/>
+    <menuitem name="Menu 2" id="api__jwt.menu_2" parent="api__jwt.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="api__jwt.menu_1_list" parent="api__jwt.menu_1"
+              action="api__jwt.action_window"/>
+    <menuitem name="Server to list" id="api__jwt" parent="api__jwt.menu_2"
+              action="api__jwt.action_server"/>
+-->
+  </data>
+</odoo>

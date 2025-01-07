@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="my_awesome_dashboard.MyAwesomeDashboard">
+        <Layout display="display" className="'o_dashboard h-100'">
+            <t t-set-slot="layout-buttons">
+                <input type="text" class="form-control me-2" placeholder="Enter something" t-ref="inputField"/>
+                <button class="btn btn-primary" t-on-click="onSubmit">Submit</button>
+
+                 <select t-on-change="onUserChange" class="form-control me-2">
+                    <option t-att-value="null" disabled="disabled" selected="true">Select a user</option>
+                    <t t-foreach="all_users.value" t-as="user" t-key="user.id">
+                        <option t-att-value="user.id" t-esc="user.name"/>
+                    </t>
+                </select>
+            </t>
+
+            <!-- Display projects list -->
+            <t t-if="all_projects.value.length">
+            <ProjectList all_projects="all_projects.value"/>
+            </t>
+            <t t-else="">
+            <p>No projects found.</p>
+            </t>
+        </Layout>
+
+    </t>
+</templates>

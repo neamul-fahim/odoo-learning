@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="my_awesome_dashboard.ProjectCard">
+        <div class="card mb-3 shadow-sm border-0" style="max-width: 540px; border-radius: 10px; overflow: hidden;">
+            <div class="row g-0">
+                <!-- Left Section (Optional Image or Icon Placeholder) -->
+                <div class="col-md-4 bg-secondary text-center text-white d-flex align-items-center justify-content-center" style="padding: 20px;">
+                    <h1 style="font-size: 2.5rem; margin: 0; font-weight: bold;">P</h1>
+                </div>
+
+                <!-- Right Section with Details -->
+                <div class="col-md-8">
+                    <div class="card-body py-4 px-4">
+                        <h5 class="card-title" style="font-size: 1.25rem; font-weight: 600; color: #333;">Project ID: <span t-esc="props.project.id"/></h5>
+                        <p class="card-text" style="font-size: 1rem; color: #555;">Project Name: <span t-esc="props.project.name"/></p>
+                        <p class="card-text" style="font-size: 1rem; color: #555;">State: <span t-esc="props.project.state"/></p>
+                        <p class="card-text" style="font-size: 1rem; color: #555;">Deadline: <span t-esc="props.project.date_deadline"/></p>
+
+                        <!-- Add option for actions -->
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-primary btn-sm me-2" style="border-radius: 20px;">View Details</button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" style="border-radius: 20px;">Edit Project</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

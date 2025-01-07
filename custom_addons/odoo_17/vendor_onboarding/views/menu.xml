@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<menuitem id="vendor_profile_review"
+          name="Vendor profile review"
+          parent="sale.sale_menu_root"
+          action="vendor_onboarding.action_vendor_onboarding"
+        />
+</odoo>

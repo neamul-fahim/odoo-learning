@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <!-- Snippets and options -->
+   <template id="dynamic_snippets" inherit_id="website.snippets"
+             name="Snippet">
+       <xpath expr="//div[@id='snippet_effect']//t[@t-snippet][last()]"
+              position="after">
+           <t t-snippet="dynamic_snippet.project_list"/>
+       </xpath>
+   </template>
+</odoo>

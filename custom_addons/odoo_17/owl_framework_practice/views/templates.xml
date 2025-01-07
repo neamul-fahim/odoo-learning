@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="basic_owl_template">
+        <html>
+            <head>
+<!--                <script type="text/javascript">-->
+<!--                    var odoo = {-->
+<!--                        csrf_token: "<t t-nocache="The csrf token must always be up to date." t-esc="request.csrf_token(None)"/>",-->
+<!--                        debug: "<t t-out="debug"/>",-->
+<!--                        __session_info__: <t t-esc="json.dumps(session_info)"/>,-->
+<!--                    };-->
+<!--                </script>-->
+                <t t-call-assets="owl_framework_practice.my_assets" />
+<!--                <t t-call-assets="web.assets_frontend" />-->
+            </head>
+            <body>
+                <div id="app"></div>
+
+            </body>
+        </html>
+    </template>
+</odoo>
+
+
+
+
+
+

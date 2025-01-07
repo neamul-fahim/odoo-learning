@@ -1,0 +1,42 @@
+
+<odoo>
+    <data>
+<!--    access rights category  -->
+    <record id="vendor_profile_approval" model="ir.module.category">
+        <field name="name"> Vendor profile approval</field>
+    </record>
+<!--  groups -->
+    <record id="level1_approval_group" model="res.groups">
+        <field name="name"> Level1 approval group</field>
+        <field name="category_id" ref="vendor_onboarding.vendor_profile_approval"/>
+    </record>
+
+    <record id="level2_approval_group" model="res.groups">
+        <field name="name"> Level2 approval group</field>
+        <field name="category_id" ref="vendor_onboarding.vendor_profile_approval"/>
+    </record>
+
+
+    <record id="vendor_profile_access_level1_approval_group" model="ir.model.access">
+        <field name="name">Vendor profile access (level1_approval_group)</field>
+        <field name="model_id" ref="model_vendor_details"/>
+        <field name="group_id" ref="vendor_onboarding.level1_approval_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="vendor_profile_access_level2_approval_group" model="ir.model.access">
+        <field name="name">Vendor profile access (level2_approval_group)</field>
+        <field name="model_id" ref="model_vendor_details"/>
+        <field name="group_id" ref="vendor_onboarding.level2_approval_group"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+
+    </record>
+    </data>
+</odoo>
+

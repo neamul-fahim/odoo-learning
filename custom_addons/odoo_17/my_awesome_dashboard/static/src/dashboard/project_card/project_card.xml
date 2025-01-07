@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="my_awesome_dashboard.ProjectCard">
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+<!--                <div class="col-md-4">-->
+<!--                    <img src="https://via.placeholder.com/150" class="img-fluid rounded-start" alt="Project Image"/>-->
+<!--                </div>-->
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">Project ID: <span t-esc="props.project.id"/></h5>
+                        <p class="card-text">Project Name: <span t-esc="props.project.name"/></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

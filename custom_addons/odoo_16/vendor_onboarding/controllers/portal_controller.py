@@ -23,12 +23,22 @@ class VendorAccountPortal(portal.CustomerPortal):
 
             values['vendor_count'] = vendor_count
 
+        if 'vendor_dashboard' in counters:
+            vendor_dashboard_count = 1
+            values['vendor_dashboard'] = vendor_dashboard_count
+
         return values
+
+
+    @http.route('/my/vendor_dashboard', type='http', auth='public', methods=['GET'],website=True)
+    def vendor_dashboard(self, **kw):
+        print('================ vendor===============')
+        return http.request.render("vendor_onboarding.vendor_dashboard_template")
+
 
 
     @http.route('/my/vendor_account', type='http', auth='public', methods=['GET'])
     def vendor_account(self,**kw):
-        print(f'vendor ----------------------')
         # Fetch the record from the model
         email = http.request.env.user.login
         signup_record = http.request.env['signup'].sudo().search([('email', '=', email)], limit=1)

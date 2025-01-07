@@ -1,19 +1,20 @@
-<!-- templates.xml -->
-        <odoo>
-            <data>
-                <template id="basic_owl_template" name="Basic Owl Page">
-                    <html>
-                        <head>
-                            <h1>hello world</h1>
-<!--                            <link type="image/x-icon" rel="shortcut icon" href="/web/static/img/favicon.ico"/>-->
-                            <t t-call-assets="web.assets_frontend"/>
-                        </head>
-                        <body>
-                            <div id="app"></div>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="basic_owl_template">
+        <html>
+            <head>
+                <t t-call-assets="web.assets_frontend" />
+            </head>
+            <body>
+                <div id="app"></div>
 
-                        </body>
-                    </html>
-                </template>
-            </data>
-        </odoo>
+            </body>
+        </html>
+    </template>
+</odoo>
+
+
+
+
+
 

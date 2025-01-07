@@ -20,12 +20,11 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'web'],
 
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
-        'views/views.xml',
         'views/templates.xml',
         # 'views/click_counter.xml',
     ],
@@ -35,8 +34,7 @@
     ],
     'assets': {
         'web.assets_frontend': [
-        '/owl_framework_practice/static/src/js/main.js',
-        '/owl_framework_practice/static/src/js/click_counter.js',
+            'owl_framework_practice/static/src/**/*',
         ],
     },
 }

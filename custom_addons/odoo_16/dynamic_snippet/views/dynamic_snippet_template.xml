@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="project_list" name="Dynamic Snippet">
+        <section class="container dynamic_snippet">
+            <h3 class="text-center">Project List</h3>
+            <div class="row">
+                <t t-foreach="data" t-as="project">
+                    <div class="p-3 col-md-3">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title text-center"
+                                    t-esc="project['id']"/>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item text-center"
+                                    t-esc="project['name']"/>
+                            </ul>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </section>
+    </template>
+</odoo>

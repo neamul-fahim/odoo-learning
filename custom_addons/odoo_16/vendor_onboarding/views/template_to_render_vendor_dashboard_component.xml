@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="vendor_dashboard_template">
+<!--        <t t-call="website.layout">-->
+            <p>vendor template</p>
+              <owl-component name="test_dashboard"/>
+<!--        </t>-->
+    </template>
+</odoo>
+
+
+
+
+
+

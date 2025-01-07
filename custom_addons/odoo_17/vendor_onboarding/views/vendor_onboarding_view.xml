@@ -1,0 +1,47 @@
+
+
+<odoo>
+    <record id="view_vendor_details_form" model="ir.ui.view">
+        <field name="name">Vendor Details Form</field>
+        <field name="model">vendor.details</field>
+        <field name="arch" type="xml">
+            <form string="Vendor Details">
+                <header>
+                    <!-- Buttons  -->
+                    <button string="Approve (Level 1)" type="object" name="approve_level_1"
+                            class="btn-success" groups="vendor_onboarding.level1_approval_group"
+                            attributes="{'invisible': ['|', ('state', '!=', 'in_review'), ('state', '=', False)]}"/>
+                    <button string="Reject (Level 1)" type="object" name="reject_level_1"
+                            class="btn-danger" groups="vendor_onboarding.level1_approval_group"
+                            attributes="{'invisible': ['|', ('state', '!=', 'in_review'), ('state', '=', False)]}"/>
+                    <button string="Approve (Level 2)" type="object" name="approve_level_2"
+                            class="btn-success" groups="vendor_onboarding.level2_approval_group"
+                            attributes="{'invisible': ['|', ('state', '!=', '1st_level_approved'), ('state', '=', False)]}"/>
+                    <button string="Reject (Level 2)" type="object" name="reject_level_2"
+                            class="btn-danger" groups="vendor_onboarding.level2_approval_group"
+                            attributes="{'invisible': ['|', ('state', '!=', '1st_level_approved'), ('state', '=', False)]}"/>
+
+                    <!-- Status bar  -->
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_review,1st_level_approved,2nd_level_approved,rejected,approved" statusbar_colors='{"rejected": "red", "2nd_level_approved": "green"}'/>
+
+
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="contact_number"/>
+                        <field name="address"/>
+                        <field name="company_name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+<record id="action_vendor_onboarding" model="ir.actions.act_window">
+        <field name="name">Vendor profile review</field>
+        <field name="res_model">vendor.details</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+ </odoo>

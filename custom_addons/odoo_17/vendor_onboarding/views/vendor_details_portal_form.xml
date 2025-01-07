@@ -1,0 +1,59 @@
+<odoo>
+    <template id="vendor_details_portal_form" name="Vendor Details Portal Form">
+        <head>
+        <link rel="stylesheet" href="/vendor_onboarding/static/src/css/vendor_details_portal_form.css" />
+        </head>
+            <div class="container mt16">
+                <h2>Vendor Details</h2>
+                <!-- Status Bar -->
+                <div class="statusbar">
+                    <div class="statusbar-item"
+                         t-att-class="record.state == 'draft' and 'status-active'">
+                        Draft
+                    </div>
+                    <div class="statusbar-item"
+                         t-att-class="record.state == 'in_review' and 'status-active'">
+                        In Review
+                    </div>
+                    <div class="statusbar-item"
+                         t-att-class="record.state == '1st_level_approved' and 'status-active'">
+                        1st Level Approved
+                    </div>
+                    <div class="statusbar-item"
+                         t-att-class="record.state == '2nd_level_approved' and 'status-active'">
+                        2nd Level Approved
+                    </div>
+                    <div class="statusbar-item"
+                         t-att-class="record.state == 'rejected' and 'status-active status-rejected'">
+                        Rejected
+                    </div>
+                    <div class="statusbar-item"
+                         t-att-class="record.state == 'approved' and 'status-active status-approved'">
+                        Approved
+                    </div>
+                </div>
+
+                <!-- Vendor Details Form -->
+                <div class="card mt16">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <span t-field="record.name" />
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Number:</label>
+                            <span t-field="record.contact_number" />
+                        </div>
+                        <div class="form-group">
+                            <label>Address:</label>
+                            <span t-field="record.address" />
+                        </div>
+                        <div class="form-group">
+                            <label>Company Name:</label>
+                            <span t-field="record.company_name" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </template>
+</odoo>
