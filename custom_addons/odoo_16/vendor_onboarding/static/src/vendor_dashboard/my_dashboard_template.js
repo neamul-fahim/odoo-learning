@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<templates xml:space="preserve">
+/** @odoo-module **/
+
+import { Component, xml } from "@odoo/owl";
+
+export const VendorDashboardTemplate = xml/* xml */ `
     <t t-name="vendor_dashboard.vendorDashboard_template">
 
             <t t-if="all_projects.value.length">
@@ -10,4 +13,4 @@
             </t>
 
     </t>
-</templates>
+`;

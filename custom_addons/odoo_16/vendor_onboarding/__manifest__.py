@@ -38,11 +38,11 @@
         'views/portal.xml',
         'views/views.xml',
         'views/menu.xml',
-        'views/template_to_render_vendor_dashboard_component.xml',
+        'views/vendor_dashboard_template.xml',
     ],
     'assets': {
         'web.assets_frontend': [
-            'vendor_onboarding/static/src/vendor_dashboard/**/*',
+            'vendor_onboarding/static/src/**/*',
         ],
     },
     # only loaded in demonstration mode

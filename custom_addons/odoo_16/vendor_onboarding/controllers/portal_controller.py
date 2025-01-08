@@ -32,7 +32,6 @@ class VendorAccountPortal(portal.CustomerPortal):
 
     @http.route('/my/vendor_dashboard', type='http', auth='public', methods=['GET'],website=True)
     def vendor_dashboard(self, **kw):
-        print('================ vendor===============')
         return http.request.render("vendor_onboarding.vendor_dashboard_template")
 
 

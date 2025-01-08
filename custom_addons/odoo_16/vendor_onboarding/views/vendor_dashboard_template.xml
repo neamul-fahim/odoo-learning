@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="vendor_dashboard_template">
+        <html>
+            <head>
+                <t t-call-assets="web.assets_frontend"/>
+            </head>
+            <body>
+                <p>vendor template</p>
+                <div id="vendor_dashboard_mount">
+                </div>
+            </body>
+        </html>
+
+    </template>
+</odoo>
+
+
+
+
+
+

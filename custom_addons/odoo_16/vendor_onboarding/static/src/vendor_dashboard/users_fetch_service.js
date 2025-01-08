@@ -1,8 +1,10 @@
 /** @odoo-module */
 import { registry } from '@web/core/registry'
 
+console.log("--------------users_fetch_service.js");
 
 const usersFetchService = {
+
     dependencies: ['rpc'],
     start(env, {rpc}){
      return {

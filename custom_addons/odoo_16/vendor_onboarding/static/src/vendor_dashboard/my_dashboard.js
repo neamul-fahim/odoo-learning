@@ -1,21 +1,20 @@
 /** @odoo-module **/
 
-import { Component, useRef, onWillStart, useState } from "@odoo/owl";
+import { Component, useRef, onWillStart, useState,xml } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { ProjectList } from './dashboard_item/dashboard_item';
-import { Layout } from "@web/search/layout";
+import { VendorDashboardTemplate } from './my_dashboard_template.js';
 
-//import { jsonrpc } from "@web/core/network/rpc_service";
+export class VendorDashboard extends Component {
 
-
-
-class MyAwesomeDashboard extends Component {
-    static template = "my_awesome_dashboard.MyAwesomeDashboard";
-    static components = { Layout, ProjectList };
+    static template = "vendor_dashboard.vendorDashboard_template";
+    static components = { ProjectList };
 
 
    setup(){
+   console.log("--------------my_dashboard.js");
+
    this.display = {
             controlPanel: {},
         };
@@ -61,4 +60,4 @@ class MyAwesomeDashboard extends Component {
 }
 
 //registry.category("actions").add("my_awesome_dashboard.dashboard", MyAwesomeDashboard);
-registry.category("public_components").add("vendor_dashboard", MyAwesomeDashboard);
+//registry.category("public_components").add("vendor_dashboard", MyAwesomeDashboard);
