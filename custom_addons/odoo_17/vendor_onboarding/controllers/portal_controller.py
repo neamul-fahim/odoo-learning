@@ -101,6 +101,16 @@ class AllVendorAccountsPortal(CustomerPortal):
               'page_name': 'vendor_account_pending'
               }
 
+        vendors = http.request.env['vendor.details'].search([])
+        vendors_ids = vendors.mapped('id')
+
+        vendor_index = vendors_ids.index(vendor_id)
+
+        if vendor_index > 0:
+            vals['prev_record'] = f'/my/vendor_account_pending/{vendors_ids[vendor_index-1]}'
+        if vendor_index < len(vendors_ids) -1:
+            vals['next_record'] = f'/my/vendor_account_pending/{vendors_ids[vendor_index+1]}'
+
         if not vendor.exists():
             return http.request.not_found()
 
