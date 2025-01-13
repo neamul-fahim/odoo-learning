@@ -67,16 +67,28 @@ class AllVendorAccountsPortal(CustomerPortal):
         return values
 
     @http.route(['/my/all_vendor_accounts', '/my/all_vendor_accounts/page/<int:page>'], type='http', auth='public', methods=['GET'], website=True)
-    def all_vendor_accounts(self,page=1, **kw):
+    def all_vendor_accounts(self,page=1,sortby='id', **kw):
+
+        sort_query_list = {
+            'id': {'label': 'ID', 'order':'id desc'},
+            'name': {'label': 'Name', 'order':'name'},
+        }
+
+        default_order_by = sort_query_list[sortby]['order']
+
         total_vendor = http.request.env['vendor.details'].sudo().search_count([])
         page_details = pager(url='/my/all_vendor_accounts',
                              total=total_vendor,
                              page=page,
-                             step=1)
-        vendor_counts = http.request.env['vendor.details'].sudo().search([],limit=1,offset=page_details['offset'])
+                             step=1,
+                             url_args={'sortby':sortby}
+                             )
+        vendor_counts = http.request.env['vendor.details'].sudo().search([],limit=1,order=default_order_by ,offset=page_details['offset'])
         vals = {'vendor_counts':vendor_counts,
                 'page_name':'all_vendor_account',
-                'pager':page_details
+                'pager':page_details,
+                'sortby':sortby,
+                'searchbar_sortings':sort_query_list
                 }
         return http.request.render('vendor_onboarding.all_vendor_accounts_portal_tree_view',vals)
 
