@@ -1,0 +1,21 @@
+
+<odoo>
+    <template id="portal_custom_vendor_account" name="Vendor Account" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_vendor_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_vendor_category" position="inside">
+            <t t-if="request.env.user.has_group('base.group_portal')">
+
+                <t t-call="portal.portal_docs_entry">
+                    <!--                <t t-set="bg_color" t-value="'alert-primary alert-primary'"/>-->
+                    <t t-set="placeholder_count" t-value="'vendor_count'"/>
+                    <t t-set="title">Vendor Account</t>
+                    <t t-set="url" t-value="'/my/vendor_account'"/>
+                    <t t-set="text">Checkout your account</t>
+                    <!--                <t t-set="show_count" t-value="True"/>-->
+                </t>
+            </t>
+        </div>
+</template>
+</odoo>

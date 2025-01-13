@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!--<template id="portal_recruitment" name="Recruitment" inherit_id="portal.portal_breadcrumbs" priority="30">-->
+<!--       <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">-->
+<!--           <li t-if="page_name == 'recruitment'" t-attf-class="breadcrumb-item #{'active ' if recruitment else ''}">-->
+<!--               <a t-if="recruitment" t-attf-href="/recruitment?{{ keep_query() }}">Recruitment</a>-->
+<!--               <t t-else="">Recruitment</t>-->
+<!--           </li>-->
+<!--       </xpath>-->
+<!--   </template>-->
+
+<!--   <template id="portal_my_home_menu_recruitment" name="Recruitment" inherit_id="portal.portal_my_home" customize_show="True" priority="30">-->
+<!--       <xpath expr="//div[hasclass('o_portal_docs')]" position="before">-->
+<!--           <t t-set="portal_client_category_enable" t-value="True"/>-->
+<!--       </xpath>-->
+<!--       <div id="portal_client_category" position="inside">-->
+<!--           <t t-call="portal.portal_docs_entry">-->
+<!--&lt;!&ndash;               <t t-set="icon" t-value="'/portal_recruitment/static/src/img/recruitment.svg'"/>&ndash;&gt;-->
+<!--               <t t-set="title">Recruitment</t>-->
+<!--               <t t-set="url" t-value="'/my/vendor_account'"/>-->
+<!--               <t t-set="text">View the Recruitments</t>-->
+<!--               <t t-set="placeholder_count" t-value="'vendor_count'"/>-->
+<!--           </t>-->
+<!--       </div>-->
+<!--   </template>-->
+</odoo>

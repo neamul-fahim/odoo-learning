@@ -1,5 +1,7 @@
 <odoo>
     <template id="vendor_details_portal_form" name="Vendor Details Portal Form">
+        <t t-call="portal.portal_layout">
+
         <head>
         <link rel="stylesheet" href="/vendor_onboarding/static/src/css/vendor_details_portal_form.css" />
         </head>
@@ -55,5 +57,6 @@
                     </div>
                 </div>
             </div>
+        </t>
     </template>
 </odoo>

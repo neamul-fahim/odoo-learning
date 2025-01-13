@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<!--    for portal user-->
+         <!--   vendor dashboard   -->
+        <template id="portal_my_home_vendor_dashboard" name="Vendor Dashboard"  inherit_id="portal.portal_my_home" >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-if="request.env.user.has_group('base.group_portal')">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">Vendor Dashboard</t>
+                    <t t-set="url" t-value="'/my/vendor_dashboard'"/>
+                    <t t-set="placeholder_count" t-value="'vendor_dashboard'"/>
+                </t>
+            </t>
+        </xpath>
+    </template>
+
+</odoo>

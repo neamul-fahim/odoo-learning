@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="my_awesome_dashboard.ProjectCard">
-        <div class="card mb-3 shadow-sm border-0" style="max-width: 540px; border-radius: 10px; overflow: hidden;">
+        <div class="card mb-4 shadow-sm border-0" style="max-width: 540px; border-radius: 10px; overflow: hidden;">
             <div class="row g-0">
                 <!-- Left Section (Optional Image or Icon Placeholder) -->
-                <div class="col-md-4 bg-secondary text-center text-white d-flex align-items-center justify-content-center" style="padding: 20px;">
+                <div class="col-md-8 bg-secondary text-center text-white d-flex align-items-center justify-content-center" style="padding: 20px;">
                     <h1 style="font-size: 2.5rem; margin: 0; font-weight: bold;">P</h1>
                 </div>
 

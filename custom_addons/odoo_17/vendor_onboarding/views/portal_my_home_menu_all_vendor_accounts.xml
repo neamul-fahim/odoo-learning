@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+     <template id="portal_my_home_menu_all_vendor_accounts" name="Portal layout : All Vendor Account menu entries" inherit_id="portal.portal_breadcrumbs">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name in ['all_vendor_accounts', 'vendor_account_pending']" t-attf-class="breadcrumb-item">
+                <t t-if="vendor_counts" >All Vendor Account</t>   <!-- "vendor_counts" is returned by /my/all_vendor_accounts-->
+                <a t-else="" t-attf-href="/my/all_vendor_accounts">All Vendor Account</a>
+            </li>
+            <li t-if="page_name == 'vendor_account_pending'" t-attf-class="breadcrumb-item">
+           <t t-esc="record.name"/>  <!-- "record" is returned by /my/vendor_account_pending/<int:vendor_id>'-->
+            </li>
+        </xpath>
+    </template>
+
+
+
+    <template id="portal_custom_all_vendor_accounts" name="All Vendor Account" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_vendor_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_vendor_category" position="inside">
+            <t t-if="request.env.user.has_group('base.group_user')">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">All Vendor Accounts</t>
+                    <t t-set="url" t-value="'/my/all_vendor_accounts'"/>
+                    <t t-set="placeholder_count" t-value="'all_vendor_counts'"/>
+                    <t t-set="text">Checkout all vendor accounts</t>
+                </t>
+            </t>
+        </div>
+    </template>
+</odoo>

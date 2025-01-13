@@ -1,9 +1,9 @@
 from odoo import http
-from odoo.addons.portal.controllers import portal
+from odoo.addons.portal.controllers.portal import CustomerPortal, pager
 
 
 # for portal user
-class VendorAccountPortal(portal.CustomerPortal):
+class VendorAccountPortal(CustomerPortal):
     def _prepare_home_portal_values(self, counters):
         values = super()._prepare_home_portal_values(counters)
 
@@ -54,7 +54,7 @@ class VendorAccountPortal(portal.CustomerPortal):
 
 
 # for internal user
-class AllVendorAccountsPortal(portal.CustomerPortal):
+class AllVendorAccountsPortal(CustomerPortal):
     def _prepare_home_portal_values(self, counters):
         values = super()._prepare_home_portal_values(counters)
 
@@ -63,22 +63,32 @@ class AllVendorAccountsPortal(portal.CustomerPortal):
             all_vendor_counts = http.request.env['vendor.details'].sudo().search_count([])
 
             values['all_vendor_counts'] = all_vendor_counts
-
+            # values['page_name'] = 'all_vendor_account'
         return values
 
-    @http.route('/my/all_vendor_accounts', type='http', auth='public', methods=['GET'], website=True)
-    def all_vendor_accounts(self, **kw):
-        vendor_counts = http.request.env['vendor.details'].sudo().search([])
-        return http.request.render('vendor_onboarding.all_vendor_accounts_portal_tree_view',{'vendor_counts':vendor_counts})
+    @http.route(['/my/all_vendor_accounts', '/my/all_vendor_accounts/page/<int:page>'], type='http', auth='public', methods=['GET'], website=True)
+    def all_vendor_accounts(self,page=1, **kw):
+        total_vendor = http.request.env['vendor.details'].sudo().search_count([])
+        page_details = pager(url='/my/all_vendor_accounts',
+                             total=total_vendor,
+                             page=page,
+                             step=1)
+        vendor_counts = http.request.env['vendor.details'].sudo().search([],limit=1,offset=page_details['offset'])
+        vals = {'vendor_counts':vendor_counts,
+                'page_name':'all_vendor_account',
+                'pager':page_details
+                }
+        return http.request.render('vendor_onboarding.all_vendor_accounts_portal_tree_view',vals)
 
     @http.route('/my/vendor_account_pending/<int:vendor_id>',type='http', auth='public', methods=['GET'], website=True)
     def vendor_account_pending(self,vendor_id, **kw):
 
-        print(f"vendor id ==== {vendor_id}")
         vendor = http.request.env['vendor.details'].sudo().browse(vendor_id)
 
         if not vendor.exists():
             return http.request.not_found()
-
+        vals = {'record':vendor,
+                'page_name':'vendor_account_pending',
+                }
         # Render the form view template with the vendor data
-        return http.request.render('vendor_onboarding.vendor_details_portal_form',{'record':vendor})
+        return http.request.render('vendor_onboarding.vendor_details_portal_form',vals)

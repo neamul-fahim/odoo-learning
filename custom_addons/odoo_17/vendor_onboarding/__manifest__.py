@@ -36,12 +36,16 @@
         'views/set_password_page.xml',
         'views/vendor_dashboard.xml',
         'views/portal.xml',
+        'views/portal_my_home_menu_all_vendor_accounts.xml',
+        'views/portal_my_home_menu_vendor_account.xml',
+        'views/portal_my_home_menu_vendor_dashboard.xml',
         'views/views.xml',
         'views/menu.xml',
         'views/template_to_render_vendor_dashboard_component.xml',
         'views/all_vendor_accounts_portal_tree_view.xml',
         'views/project_task_form_view_inherit.xml',
         'views/custom_login_page.xml',
+        'views/test.xml',
     ],
     # 'assets': {
     #     'web.assets_frontend': [

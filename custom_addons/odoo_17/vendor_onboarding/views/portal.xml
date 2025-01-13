@@ -1,30 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-
-    <template id="portal_vendor" name="Vendor" inherit_id="portal.portal_my_home">
-        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
-            <t t-if="request.env.user.has_group('base.group_portal')">
-                <t t-call="portal.portal_docs_entry">
-                    <t t-set="title">Vendor Account</t>
-                    <t t-set="url" t-value="'/my/vendor_account'"/>
-                    <t t-set="text">Follow, view or pay your orders</t>
-                    <t t-set="placeholder_count" t-value="'vendor_count'"/>
-                </t>
-            </t>
-
-                <t t-call="portal.portal_docs_entry">
-                    <t t-set="title">Vendor Dashboard</t>
-                    <t t-set="url" t-value="'/my/vendor_dashboard'"/>
-                    <t t-set="text">Follow, view or pay your orders</t>
-                    <t t-set="placeholder_count" t-value="'vendor_dashboard'"/>
-                </t>
+    <template id="portal_my_home_vendor_dashboard_component" inherit_id="portal.portal_my_home">
+        <xpath expr="//*[hasclass('o_portal_my_home')]" position="before">
+            <owl-component name="vendor_onboarding.test_dashboard"/>
         </xpath>
     </template>
 
-<!--    for portal user-->
 
-         <!--  vendor account approval status  -->
+    <!--    this commented code also works but it follows odoo 16 conventions -->
+
+
+<!--    -->
+<!--&lt;!&ndash;    for portal user&ndash;&gt;-->
+
+<!--         &lt;!&ndash;  vendor account approval status  &ndash;&gt;-->
 <!--    <template id="portal_my_home_vendor_account" name="Vendor Account"  inherit_id="portal.portal_my_home" >-->
 <!--        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">-->
 <!--            <t t-if="request.env.user.has_group('base.group_portal')">-->
@@ -40,24 +30,24 @@
 
 <!--    <template id="portal_my_home_vendor_dashboard" name="Vendor Dashboard"  inherit_id="portal.portal_my_home" >-->
 <!--        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">-->
-<!--&lt;!&ndash;            <t t-if="request.env.user.has_group('base.group_portal')">&ndash;&gt;-->
+<!--            <t t-if="request.env.user.has_group('base.group_portal')">-->
 <!--                <t t-call="portal.portal_docs_entry">-->
 <!--                    <t t-set="title">Vendor Dashboard</t>-->
 <!--                    <t t-set="url" t-value="'/my/vendor_dashboard'"/>-->
 <!--                    <t t-set="placeholder_count" t-value="'vendor_dashboard'"/>-->
 <!--                </t>-->
-<!--&lt;!&ndash;            </t>&ndash;&gt;-->
+<!--            </t>-->
 <!--        </xpath>-->
 <!--    </template>-->
 
-    <template id="portal_my_home_vendor_dashboard" inherit_id="portal.portal_my_home">
-        <xpath expr="//*[hasclass('o_portal_my_home')]" position="before">
-            <owl-component name="vendor_onboarding.test_dashboard" />
-        </xpath>
-    </template>
+<!--    <template id="portal_my_home_vendor_dashboard_component" inherit_id="portal.portal_my_home">-->
+<!--        <xpath expr="//*[hasclass('o_portal_my_home')]" position="before">-->
+<!--            <owl-component name="vendor_onboarding.test_dashboard" />-->
+<!--        </xpath>-->
+<!--    </template>-->
 
 
-<!--    for internal user-->
+<!--&lt;!&ndash;    for internal user&ndash;&gt;-->
 <!--    <template id="portal_my_home_all_vendor_accounts" name="All Vendor Accounts"  inherit_id="portal.portal_my_home" >-->
 <!--    <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">-->
 <!--        <t t-if="request.env.user.has_group('base.group_user')">-->

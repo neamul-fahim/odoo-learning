@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <template id="portal_custom_vendor_dashboard" name="Vendor Dashboard" inherit_id="portal.portal_my_home">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_vendor_category_enable" t-value="True"/>
+        </xpath>
+        <div id="portal_vendor_category" position="inside">
+
+            <t t-if="request.env.user.has_group('base.group_portal')">
+
+                <t t-call="portal.portal_docs_entry">
+                    <!--                <t t-set="icon" t-value="'/sale/static/src/img/bag.svg'"/>-->
+                    <t t-set="title">Vendor Dashboard</t>
+                    <t t-set="url" t-value="'/my/vendor_dashboard'"/>
+                    <t t-set="text">Checkout your dashboard</t>
+                    <t t-set="placeholder_count" t-value="'vendor_dashboard'"/>
+                </t>
+            </t>
+        </div>
+    </template>
+</odoo>
