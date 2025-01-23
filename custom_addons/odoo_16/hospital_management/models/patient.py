@@ -6,19 +6,20 @@ from odoo.exceptions import ValidationError
 
 class HospitalPatient(models.Model):
     _name = 'hospital.patient'
-    _inherit = ['mail.thread',]
+    _inherit = ['mail.thread','mail.activity.mixin']
     _description = 'Patient Records'
 
     # Personal information
     name = fields.Char(string='Name', required=True, tracking=True)
-    profile_pic = fields.Binary(string='Profile Picture')
+    image_1920 = fields.Binary(string='Profile Picture')
     profile_pic_file_name = fields.Char(string='File Name (pro_pic)')
     current_prescriptions = fields.Many2many('ir.attachment', string='Current Prescriptions')
     patient_sequence = fields.Char(string='Patient Sequence', required=True, readonly=True, default='New', tracking=True)
-    doctor_id = fields.Many2one('hospital.doctor', string='Doctor', context="{'no_open': True, 'no_create': True}", tracking=True)
+    doctor_id = fields.Many2one('hospital.doctor', string='Doctor', context="{'no_open': True, 'no_create': True}", tracking=True) # 'no_open': True: This 'context' key is typically used to prevent the linked records from being opened directly from the dropdown in the form view. 'no_create': True: This 'context' key prevents users from being able to create new hospital.doctor records directly from the dropdown.
     doctor_phone = fields.Char(related='doctor_id.phone', string='Doctor Phone Number')
-    age = fields.Integer(string='Age', compute = '_compute_age', store=True)
-    date_of_birth = fields.Date(string='Date Of Birth', tracking=True)
+    age = fields.Integer(string='Age', compute = '_compute_age', store=True) # store parameter in a computed field indicates whether the computed value should be stored in the database or not.
+    date_of_birth = fields.Date(string='Date Of Birth', tracking=True, default= fields.Date.context_today)
+    date_of_birth_with_time = fields.Datetime(string='Date Of Birth (with time)', tracking=True, default= fields.Datetime.now)
     gender  = fields.Selection(
         selection=[
             ('male','Male'),

@@ -1,6 +1,8 @@
 {
     'name':'Hospital Management',
     'application':True,
+    'sequence':1,
+    'author': 'Fahim',
     'depends': ['mail'],
     'data':[
         'security/ir.model.access.csv',
@@ -11,6 +13,7 @@
         'views/hospital_patient_views.xml',
         'views/hospital_patient_bill_view.xml',
         'views/hospital_doctor_view.xml',
+        'views/hospital_department_views.xml',
     ]
 }
 

@@ -6,12 +6,18 @@
         <field name="name">patient.bill.tree</field>
         <field name="model">hospital.patient.bill</field>
         <field name="arch" type="xml">
-            <tree string="Patient Bills" decoration-bf="is_paid">
-                <field name="patient_id"/>
-                <field name="billable_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                <field name="discount"/>
-                <field name="total_amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
-                <field name="is_paid"/>
+            <tree string="Patient Bills" decoration-bf="is_paid" decoration-success="bill_state == 'paid'"
+                  decoration-danger="bill_state == 'unpaid'" decoration-info="bill_state == 'in_process'" multi_edit="1"> <!-- decoration-bf marks the records in 'bold' that are paid -->
+                <field name="patient_id" optional="show" widget="many2one_avatar"/>
+                <field name="billable_amount" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
+                <field name="discount" optional="show"/>
+                <field name="total_amount" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
+                <field name="is_paid" optional="hide"/>
+                <field name="activity_ids" widget="list_activity" optional="show"/>
+
+                <field name="bill_state" decoration-success="bill_state == 'paid'"
+                       decoration-danger="bill_state == 'unpaid'" decoration-info="bill_state == 'in_process'"
+                       widget="badge" optional="show"/>
             </tree>
         </field>
     </record>
@@ -22,10 +28,21 @@
         <field name="model">hospital.patient.bill</field>
         <field name="arch" type="xml">
             <form string="Patient Bill">
-                <button name="action_print_report" string="Print Report" type="object" class="btn-primary"/>
+                <header>
+                    <button name="unpaid_bill" type="object" string="Unpaid bill"  data-hotkey="u"/>
+                    <field name="bill_state" widget="statusbar" options="{'clickable':'1'}"
+                           statusbar_visible="draft,in_process,paid"/>
+                </header>
+                <button name="action_print_report" string="Print Report (object button)" type="object"
+                        class="btn-primary" confirm="Are you sure to print report?" help="Print a pdf report"/>
+                <button name="%(hospital_management.action_patient_bill_report)d" string="Print Report (action button)"
+                        type="action"
+                        class="btn-primary" confirm="Are you sure to print report?" help="Print a pdf report"/>
                 <sheet>
+                    <field name="priority_bill" widget="priority" placeholder="Priority bill"/>
+
                     <group>
-                        <field name="patient_id"/>
+                        <field name="patient_id" widget="many2one_avatar"/>
                         <field name="currency_id"/>
                     </group>
                     <group>
@@ -38,12 +55,11 @@
                         <field name="is_paid"/>
                     </group>
                 </sheet>
-                <footer>
-                    <button name="action_mark_as_paid" type="object" string="Mark as Paid" class="btn-primary"
-                            attrs="{'invisible': [('is_paid', '=', True)]}"/>
-                    <button name="action_print_report" type="object" string="Print Report" class="btn-secondary"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
-                </footer>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>

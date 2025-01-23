@@ -12,14 +12,17 @@
                 <field name="is_staff"/>
                 <field name="gender"/>
                 <!--filter-->
-                <filter name="filter_male" string=" Male"/>
+                <filter name="filter_male" string=" Male" domain="[('gender','=','male')]"/>
                 <filter name="filter_female" string="Female" domain="[('gender','=','female')]"/>
                 <filter name="filter_others(gender)" string="Others(gender)" domain="[('gender','=','others')]"/>
                 <separator/>
                 <filter name="filter_staff" string="Staff" domain="[('is_staff','=',True)]"/>
-                <filter string="Gender" name="group_by_gender" context="{'group_by':'gender'}"/>
+                <filter name="group_by_gender" string="Gender" context="{'group_by':'gender'}"/>
                 <separator/>
                 <filter name="active_filter" string="Archived" domain="[('active', '=', False)]"/>
+                <searchpanel>
+                    <field name="gender" icon="fa-users" enable_counters="1"/>
+                </searchpanel>
             </search>
         </field>
     </record>
@@ -29,9 +32,9 @@
         <field name="name">hospital.patient.tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree sample="1">
                 <field name="patient_sequence"/>
-                <field name="name"/>
+                <field name="name" string="Patient name"/>
                 <field name="age"/>
                 <field name="is_staff"/>
                 <field name="gender"/>
@@ -49,7 +52,7 @@
                 <sheet>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger"
                             attrs="{'invisible': [('active', '=', True)]}"/>
-                    <field name="profile_pic" filename="profile_pic_file_name" widget="image" class="oe_avatar"/>
+                    <field name="image_1920" filename="profile_pic_file_name" widget="image" class="oe_avatar"/>
                     <field name="profile_pic_file_name"/>
                     <!--sequence-->
                     <h1>
@@ -65,6 +68,7 @@
                         <group>
                             <field name="gender"/>
                             <field name="date_of_birth"/>
+                            <field name="date_of_birth_with_time"/>
                             <field name="doctor_id"/>
                             <field name="doctor_phone"/>
                         </group>
@@ -72,14 +76,14 @@
 
                     <notebook>
                         <!--First Tab-->
-                        <page string="Address">
+                        <page string="Address" name="patient_address"> <!-- name can be used to inherit the page -->
                             <group>
                                 <field name="address"/>
                             </group>
                         </page>
 
                         <!--Second Tab-->
-                        <page string="Previous Medical History">
+                        <page string="Previous Medical History" name="patient_previous_medical_history">
                             <group>
                                 <field name="pre_medical_history"/>
                                 <field name="current_prescriptions" widget="many2many_binary"/>
@@ -87,14 +91,17 @@
                         </page>
 
                         <!--Third Tab-->
-                        <page string="Others">
+                        <page string="Others" name="patient_others">
                             <group>
                                 <field name="is_staff"/>
                                 <field name="notes"/>
                             </group>
                         </page>
                     </notebook>
+                    <!-- Chatter -->
                     <div class="oe_chatter">
+                        <field name="message_follower_ids" groups="base.group_user"/>
+                        <field name="activity_ids"/>
                         <field name="message_ids"/>
                     </div>
                 </sheet>
@@ -116,7 +123,7 @@
                             <div style="display: flex; align-items: center;">
                                 <!-- Patient's profile picture -->
                                 <div class="oe_kanban_avatar" style="margin: 10px;">
-                                    <field name="profile_pic" widget="image" class="oe_kanban_avatar"/>
+                                    <field name="image_1920" widget="image" class="oe_kanban_avatar"/>
                                 </div>
 
                                 <!-- Vertical line divider -->
