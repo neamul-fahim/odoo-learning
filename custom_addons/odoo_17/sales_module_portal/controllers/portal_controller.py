@@ -71,9 +71,10 @@ class Sales_module_Portal(CustomerPortal):
 
         # vendor = http.request.env['sale.order'].sudo().browse(order_id)
         sale_order_record = http.request.env['sale.order'].sudo().browse(order_id)
-        vals = {'doc': sale_order_record,
-                'page_name': 'vendor_account_pending'
-                }
+        vals = {
+            'doc': sale_order_record,
+            'page_name': 'sale_order',
+        }
 
         sale_order_records = http.request.env['sale.order'].search([])
         sale_order_records_ids = sale_order_records.mapped('id')
@@ -104,18 +105,31 @@ class Sales_module_Portal(CustomerPortal):
     @http.route('/sale_order/create', type='http', auth='user', methods=['POST'], website=True, csrf=True)
     def create_sale_order(self, **post):
         customer_id = int(post.get('customer_id'))
-        product_id = int(post.get('product_id'))
-        quantity = int(post.get('quantity'))
+        product_ids = request.httprequest.form.getlist('product_ids[]')
+        # product_ids = post.get('product_ids[]', [])
 
-        order_line_values = [(0, 0, {
-            'product_id': product_id,
-            'product_uom_qty': quantity,
-            'price_unit': request.env['product.product'].browse(product_id).list_price
-        })]
+        print(f'product==============={product_ids}')
+        if not product_ids:
+            return request.redirect('/sale_order/failure')
 
+        # Convert product_ids to integers and handle quantities
+        order_lines = []
+        for product_id in product_ids:
+            product_id = int(product_id)
+            quantity = int(post.get(f'quantity_{product_id}', 1))  # Get quantity for each product
+
+            order_line_values = (0, 0, {
+                'product_id': product_id,
+                'product_uom_qty': quantity,
+                'price_unit': request.env['product.product'].browse(product_id).list_price
+            })
+
+            order_lines.append(order_line_values)
+
+        # Create the sale order
         sale_order = request.env['sale.order'].create({
             'partner_id': customer_id,
-            'order_line': order_line_values,
+            'order_line': order_lines,
         })
 
         return request.redirect('/sale_order/success')
@@ -145,4 +159,4 @@ class Sales_module_Portal(CustomerPortal):
         sale_order.write({'state': new_state})
 
         # Redirect back to the quotations page or show success message
-        # return request.redirect('/my/quotations')
+        return request.redirect(f'/my/sale_order/{order_id}')

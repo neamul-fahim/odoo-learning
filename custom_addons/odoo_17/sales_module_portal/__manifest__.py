@@ -32,8 +32,13 @@ Long description of module's purpose
     'demo': [
         'demo/demo.xml',
     ],
+    # 'assets': {
+    #     'web.assets_frontend': [
+    #         'sales_module_portal/static/src/js/sale_order_create_update_form_view.js',
+    #     ],
+    # },
+
     # 'application': True,
     # 'installable': True,
 
 }
-

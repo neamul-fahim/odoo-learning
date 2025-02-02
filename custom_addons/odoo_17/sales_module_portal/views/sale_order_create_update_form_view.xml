@@ -18,11 +18,11 @@
                             </t>
                         </select>
                     </div>
-
+                    <div style="height:20px;"/>
                     <div class="form-group">
-                        <label for="product">Product</label>
-                        <select id="product" name="product_id" required="True">
-                            <option value="">Select Product</option>
+                        <label for="products">Products</label>
+                        <select id="products" name="product_ids[]" multiple="multiple" required="True">
+                            <option value="">Select Products</option>
                             <t t-foreach="products" t-as="product">
                                 <option t-att-value="product.id">
                                     <t t-esc="product.name"/>
@@ -31,16 +31,34 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="quantity">Quantity</label>
-                        <input type="number" id="quantity" name="quantity" required="True" min="1" value="1"/>
-                    </div>
+                    <div id="quantity-container"></div>
+                    <div style="height:20px;"/>
 
                     <button type="submit" class="btn btn-primary">Create Order</button>
                 </form>
             </div>
+
+            <script>
+                document.getElementById('products').addEventListener('change', function() {
+                let productIds = Array.from(this.selectedOptions).map(option => option.value);
+                let container = document.getElementById('quantity-container');
+                container.innerHTML = '';
+
+                productIds.forEach(function(productId) {
+                let div = document.createElement('div');
+                div.classList.add('form-group');
+                div.innerHTML = `
+                <label for="quantity-${productId}">Quantity for Product ${productId}</label>
+                <input type="number" name="quantity_${productId}" id="quantity-${productId}" required="True" min="1"
+                       value="1"/>
+                `;
+                container.appendChild(div);
+                });
+                });
+            </script>
         </t>
     </template>
+
 
     <template id="sale_order_success" name="Sale Order Success">
         <t t-call="website.layout">
