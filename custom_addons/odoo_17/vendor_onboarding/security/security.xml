@@ -16,7 +16,7 @@
         <field name="category_id" ref="vendor_onboarding.vendor_profile_approval"/>
     </record>
 
-
+<!--access rights-->
     <record id="vendor_profile_access_level1_approval_group" model="ir.model.access">
         <field name="name">Vendor profile access (level1_approval_group)</field>
         <field name="model_id" ref="model_vendor_details"/>
@@ -37,6 +37,18 @@
         <field name="perm_unlink" eval="0"/>
 
     </record>
+
+
+<!--        this code has no use here but to show how 'record rules' work
+<record id="vendor_details_rule_all_vendor" model="ir.rule">-->
+<!--            <field name="name">All Vendor</field>-->
+<!--            <field name="model_id" ref="model_vendor_details"/>-->
+<!--            <field name="domain_force">[]</field>-->
+<!--            -->
+<!--            &lt;!&ndash; use any one of the code for groups&ndash;&gt;-->
+<!--            <field name="groups" eval="[(4, ref('vendor_onboarding.level1_approval_group'))]"/> &lt;!&ndash; This is the old way. &ndash;&gt;-->
+<!--            <field name="groups" eval="[Command.link(ref('vendor_onboarding.level1_approval_group'))]"/> &lt;!&ndash; This is the new way. Works for odoo15++ &ndash;&gt;-->
+<!--        </record>-->
     </data>
 </odoo>
 

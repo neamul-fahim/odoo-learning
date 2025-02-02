@@ -38,7 +38,7 @@ class HospitalPatient(models.Model):
 
     # others
     is_staff = fields.Boolean(string='Is Staff', tracking=True)
-    active = fields.Boolean(default=True)
+    active = fields.Boolean(default=True, help='active is a default field name that activates archive and unarchive option under Action')
     notes = fields.Text(string='Notes', tracking=True)
 
     @api.model_create_multi

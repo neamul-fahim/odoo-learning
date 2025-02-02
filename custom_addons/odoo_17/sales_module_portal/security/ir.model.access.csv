@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_module_portal_sales_module_portal,sales_module_portal.sales_module_portal,model_sales_module_portal_sales_module_portal,base.group_user,1,1,1,1

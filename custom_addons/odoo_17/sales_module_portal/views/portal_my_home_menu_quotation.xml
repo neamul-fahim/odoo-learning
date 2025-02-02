@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+       <template id="portal_my_home_sale_quotation" name="Show Quotations" inherit_id="portal.portal_my_home" priority="1">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+            <t t-set="portal_alert_category_enable" t-value="False"/>
+
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="placeholder_count" t-value="'quotation_count_portal'"/>
+                <t t-set="title">Quotations to review</t>
+                <t t-set="url" t-value="'/my/all_sales'"/>
+            </t>
+        </div>
+
+    </template>
+</odoo>

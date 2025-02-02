@@ -1,0 +1,15 @@
+<odoo>
+
+    <record id="action_oauth2_provider" model="ir.actions.act_window">
+        <field name="name">OAuth2 Providers</field>
+        <field name="res_model">auth.oauth2.provider</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_oauth2_root" name="OAuth2 Configuration"/>
+
+    <menuitem id="menu_oauth2_provider"
+              name="Providers"
+              parent="menu_oauth2_root"
+              action="action_oauth2_provider"/>
+</odoo>
