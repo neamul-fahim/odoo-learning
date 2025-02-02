@@ -26,6 +26,7 @@ Long description of module's purpose
         'views/portal_my_home_menu_quotation.xml',
         'views/all_sales_order_portal_tree_view.xml',
         'views/sale_order_portal_form_view.xml',
+        'views/sale_order_create_update_form_view.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

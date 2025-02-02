@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="sale_order_create_update_form_view" name="Create Sale Order Form">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Create Sale Order</h1>
+                <form action="/sale_order/create" method="post">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                    <div class="form-group">
+                        <label for="customer">Customer</label>
+                        <select id="customer" name="customer_id" required="True">
+                            <option value="">Select Customer</option>
+                            <t t-foreach="customers" t-as="customer">
+                                <option t-att-value="customer.id">
+                                    <t t-esc="customer.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product">Product</label>
+                        <select id="product" name="product_id" required="True">
+                            <option value="">Select Product</option>
+                            <t t-foreach="products" t-as="product">
+                                <option t-att-value="product.id">
+                                    <t t-esc="product.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" name="quantity" required="True" min="1" value="1"/>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Order</button>
+                </form>
+            </div>
+        </t>
+    </template>
+
+    <template id="sale_order_success" name="Sale Order Success">
+        <t t-call="website.layout">
+            <div class="container">
+                <h1>Sale Order Created Successfully!</h1>
+                <p>Your sale order has been created.</p>
+                <a href="/sale_order/new" class="btn btn-success">Create Another Order</a>
+            </div>
+        </t>
+    </template>
+
+</odoo>

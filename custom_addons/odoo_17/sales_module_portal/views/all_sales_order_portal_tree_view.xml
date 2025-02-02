@@ -6,6 +6,8 @@
             <t t-call="portal.portal_searchbar">
                 <t t-set="title">Quotations</t>
             </t>
+            <a href="/sale_order/new" class="btn btn-primary">Create Quotation</a>
+
             <div t-if="not quotations" class="alert alert-warning" role="alert">
                 There are currently no quotations for your account.
             </div>
@@ -16,7 +18,8 @@
                         <th>Quotation #</th>
                         <th class="text-end">Quotation Date</th>
                         <th class="text-end">Valid Until</th>
-                        <th class="text-center"/>
+                        <th class="text-end">Status</th>
+<!--                        <th class="text-center"/>-->
                         <th class="text-end">Total</th>
                     </tr>
                 </thead>
@@ -35,15 +38,9 @@
                         <td class="text-end">
                             <span t-field="quotation.validity_date"/>
                         </td>
-                        <td class="text-center">
-                            <span t-if="quotation.state == 'cancel'" class="badge rounded-pill text-bg-danger">
-                                <i class="fa fa-fw fa-remove"/>
-                                Cancelled
-                            </span>
-                            <span t-if="quotation.is_expired" class="badge rounded-pill text-bg-danger">
-                                <i class="fa fa-fw fa-clock-o"/>
-                                Expired
-                            </span>
+                        <td class="text-end">
+                            <span t-field="quotation.state"/>
+
                         </td>
                         <td class="text-end">
                             <span t-field="quotation.amount_total"/>

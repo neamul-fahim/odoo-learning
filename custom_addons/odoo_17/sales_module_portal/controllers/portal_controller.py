@@ -90,3 +90,59 @@ class Sales_module_Portal(CustomerPortal):
 
         # Render the form view template with the vendor data
         return http.request.render('sales_module_portal.sale_order_portal_form_view', vals)
+
+
+    @http.route('/sale_order/new', type='http', auth='user', website=True)
+    def sale_order_form(self, **kwargs):
+        customers = request.env['res.partner'].search([])
+        products = request.env['product.product'].search([])
+        return request.render('sales_module_portal.sale_order_create_update_form_view', {
+            'customers': customers,
+            'products': products
+        })
+
+    @http.route('/sale_order/create', type='http', auth='user', methods=['POST'], website=True, csrf=True)
+    def create_sale_order(self, **post):
+        customer_id = int(post.get('customer_id'))
+        product_id = int(post.get('product_id'))
+        quantity = int(post.get('quantity'))
+
+        order_line_values = [(0, 0, {
+            'product_id': product_id,
+            'product_uom_qty': quantity,
+            'price_unit': request.env['product.product'].browse(product_id).list_price
+        })]
+
+        sale_order = request.env['sale.order'].create({
+            'partner_id': customer_id,
+            'order_line': order_line_values,
+        })
+
+        return request.redirect('/sale_order/success')
+
+    @http.route('/sale_order/success', type='http', auth='user', website=True)
+    def sale_order_success(self):
+        return request.render('sales_module_portal.sale_order_success')
+
+    @http.route('/sale_order/update_state', type='http', auth='user', methods=['POST'], website=True, csrf=True)
+    def update_sale_order_state(self, **post):
+        order_id = int(post.get('order_id'))
+        new_state = post.get('new_state')
+        print(f'========================{order_id} {new_state}')
+        # Fetch the sale order using the provided order_id
+        sale_order = request.env['sale.order'].browse(order_id)
+
+        # Check if the order exists
+        if not sale_order:
+            return request.redirect('/sale_order/error')
+
+        # Check if the new_state is valid
+        valid_states = ['draft', 'sent', 'sale']
+        if new_state not in valid_states:
+            return request.redirect('/sale_order/error')
+
+        # Update the state of the sale order
+        sale_order.write({'state': new_state})
+
+        # Redirect back to the quotations page or show success message
+        # return request.redirect('/my/quotations')
