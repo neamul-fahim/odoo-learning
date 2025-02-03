@@ -41,7 +41,7 @@ class Sales_module_Portal(CustomerPortal):
         if is_admin or has_all_docs_access:
             domain = []
         else:
-            domain = [('user_id', '=', user.id)]  # Filter sales related to the logged-in user
+            domain = [('create_uid', '=', user.id)]  # Filter sales related to the logged-in user
 
         # Get total count and fetch paginated records
         total_sales = request.env['sale.order'].sudo().search_count(domain)
@@ -49,11 +49,11 @@ class Sales_module_Portal(CustomerPortal):
             url='/my/all_sales',
             total=total_sales,
             page=page,
-            step=3,
+            step=10,
             url_args={'sortby': sortby},
         )
         sale_counts = request.env['sale.order'].sudo().search(
-            domain, limit=3, order=default_order_by, offset=page_details['offset']
+            domain, limit=10, order=default_order_by, offset=page_details['offset']
         )
 
         # Prepare data for rendering
@@ -95,8 +95,8 @@ class Sales_module_Portal(CustomerPortal):
 
     @http.route('/sale_order/new', type='http', auth='user', website=True)
     def sale_order_form(self, **kwargs):
-        customers = request.env['res.partner'].search([])
-        products = request.env['product.product'].search([])
+        customers = request.env['res.partner'].sudo().search([])
+        products = request.env['product.product'].sudo().search([])
         return request.render('sales_module_portal.sale_order_create_update_form_view', {
             'customers': customers,
             'products': products
@@ -121,37 +121,36 @@ class Sales_module_Portal(CustomerPortal):
             order_line_values = (0, 0, {
                 'product_id': product_id,
                 'product_uom_qty': quantity,
-                'price_unit': request.env['product.product'].browse(product_id).list_price
+                'price_unit': request.env['product.product'].sudo().browse(product_id).list_price
             })
 
             order_lines.append(order_line_values)
 
         # Create the sale order
-        sale_order = request.env['sale.order'].create({
+        sale_order = request.env['sale.order'].sudo().create({
             'partner_id': customer_id,
             'order_line': order_lines,
         })
 
-        return request.redirect('/sale_order/success')
+        return request.redirect(f'/my/sale_order/{sale_order.id}')
 
-    @http.route('/sale_order/success', type='http', auth='user', website=True)
-    def sale_order_success(self):
-        return request.render('sales_module_portal.sale_order_success')
+    # @http.route('/sale_order/success', type='http', auth='user', website=True)
+    # def sale_order_success(self):
+    #     return request.render('sales_module_portal.sale_order_success')
 
     @http.route('/sale_order/update_state', type='http', auth='user', methods=['POST'], website=True, csrf=True)
     def update_sale_order_state(self, **post):
         order_id = int(post.get('order_id'))
         new_state = post.get('new_state')
-        print(f'========================{order_id} {new_state}')
         # Fetch the sale order using the provided order_id
-        sale_order = request.env['sale.order'].browse(order_id)
+        sale_order = request.env['sale.order'].sudo().browse(order_id)
 
         # Check if the order exists
         if not sale_order:
             return request.redirect('/sale_order/error')
 
         # Check if the new_state is valid
-        valid_states = ['draft', 'sent', 'sale']
+        valid_states = ['draft', 'sent', 'sale', 'cancel']
         if new_state not in valid_states:
             return request.redirect('/sale_order/error')
 

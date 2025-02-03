@@ -26,8 +26,8 @@
                     </button>
 
                 </form>
-                <!-- Button for Sale State -->
                 <t t-if="request.env.user.has_group('sales_team.group_sale_manager')">
+                    <!-- Button for Sale State -->
                     <form method="POST" action="/sale_order/update_state">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <input type="hidden" name="order_id" t-att-value="doc.id"/>
@@ -35,6 +35,17 @@
                          <button type="submit"
                             style="background-color: #32cd32; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 8px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);">
                         Sale Order
+                    </button>
+                    </form>
+
+                    <!-- Button for Cancel State -->
+                    <form method="POST" action="/sale_order/update_state">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="order_id" t-att-value="doc.id"/>
+                        <input type="hidden" name="new_state" value="cancel"/>
+                         <button type="submit"
+                            style="background-color: red; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 8px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);">
+                        Cancel Order
                     </button>
                     </form>
                 </t>
@@ -52,10 +63,15 @@
                 <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{doc.state == 'sale' and '32cd32' or 'f1f1f1'}; color: #{doc.state == 'sale' and 'white' or '#000'}; font-weight: #{doc.state == 'sale' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
                     Sales Order
                 </div>
+                <t t-if="doc.state=='cancel'">
+                <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{doc.state == 'cancel' and 'red' or 'f1f1f1'}; color: #{doc.state == 'cancel' and 'white' or '#000'}; font-weight: #{doc.state == 'cancel' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
+                    Cancelled
+                </div>
+                </t>
             </div>
         </div>
 
-        <!--        <t t-call="web.external_layout">-->
+                <t t-call="web.external_layout">
         <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
         <t t-set="forced_vat"
            t-value="doc.fiscal_position_id.foreign_vat"/> <!-- So that it appears in the footer of the report instead of the company VAT if it's set -->
@@ -260,7 +276,7 @@
             </div>
             <div class="oe_structure"/>
         </div>
-        <!--        </t>-->
+                </t>
     </template>
 
     <template id="report_saleorder_raw">

@@ -1,73 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="sale_order_create_update_form_view" name="Create Sale Order Form">
-        <t t-call="website.layout">
-            <div class="container">
-                <h1>Create Sale Order</h1>
-                <form action="/sale_order/create" method="post">
-                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+    <t t-call="website.layout">
+        <div class="container" style="max-width: 800px; margin: 50px auto; padding: 20px; background-color: #fff; border: 1px solid #e0e0e0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            <h1 style="font-size: 24px; color: #212121; font-weight: 600; text-align: center; margin-bottom: 30px;">Create Sale Order</h1>
 
-                    <div class="form-group">
-                        <label for="customer">Customer</label>
-                        <select id="customer" name="customer_id" required="True">
-                            <option value="">Select Customer</option>
-                            <t t-foreach="customers" t-as="customer">
-                                <option t-att-value="customer.id">
-                                    <t t-esc="customer.name"/>
-                                </option>
-                            </t>
-                        </select>
-                    </div>
-                    <div style="height:20px;"/>
-                    <div class="form-group">
-                        <label for="products">Products</label>
-                        <select id="products" name="product_ids[]" multiple="multiple" required="True">
-                            <option value="">Select Products</option>
-                            <t t-foreach="products" t-as="product">
-                                <option t-att-value="product.id">
-                                    <t t-esc="product.name"/>
-                                </option>
-                            </t>
-                        </select>
-                    </div>
+            <form action="/sale_order/create" method="post" style="display: flex; flex-direction: column; gap: 20px;">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
 
-                    <div id="quantity-container"></div>
-                    <div style="height:20px;"/>
+                <!-- Customer Selection -->
+                <div class="form-group" style="display: flex; flex-direction: column;">
+                    <label for="customer" style="font-size: 14px; color: #333; font-weight: 500; margin-bottom: 8px;">Customer</label>
+                    <select id="customer" name="customer_id" required="True" style="padding: 8px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; color: #555; background-color: #f9f9f9; width: 100%;">
+                        <option value="">Select Customer</option>
+                        <t t-foreach="customers" t-as="customer">
+                            <option t-att-value="customer.id">
+                                <t t-esc="customer.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
 
-                    <button type="submit" class="btn btn-primary">Create Order</button>
-                </form>
-            </div>
+                <!-- Product Selection -->
+                <div class="form-group" style="display: flex; flex-direction: column;">
+                    <label for="products" style="font-size: 14px; color: #333; font-weight: 500; margin-bottom: 8px;">Products</label>
+                    <select id="products" name="product_ids[]" multiple="multiple" required="True" style="padding: 8px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; color: #555; background-color: #f9f9f9; height: 150px; width: 100%; overflow-y: auto;">
+                        <option value="">Select Products</option>
+                        <t t-foreach="products" t-as="product">
+                            <option t-att-value="product.id">
+                                <t t-esc="product.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
 
-            <script>
-                document.getElementById('products').addEventListener('change', function() {
+                <!-- Dynamic Quantity Fields -->
+                <div id="quantity-container" style="display: flex; flex-direction: column; gap: 10px;"></div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary" style="padding: 12px 20px; background-color: #714b67; color: white; border: 1px solid #3d5afe; border-radius: 4px; cursor: pointer; font-size: 14px; transition: background-color 0.3s ease; width: 100%;">
+                    Create Order
+                </button>
+            </form>
+        </div>
+
+        <script>
+            // Pass a mapping of product IDs to their names
+            const productData = {
+                <t t-foreach="products" t-as="product">
+                    "<t t-esc="product.id"/>": "<t t-esc="product.name"/>",
+                </t>
+            };
+
+            document.getElementById('products').addEventListener('change', function () {
                 let productIds = Array.from(this.selectedOptions).map(option => option.value);
                 let container = document.getElementById('quantity-container');
                 container.innerHTML = '';
 
-                productIds.forEach(function(productId) {
-                let div = document.createElement('div');
-                div.classList.add('form-group');
-                div.innerHTML = `
-                <label for="quantity-${productId}">Quantity for Product ${productId}</label>
-                <input type="number" name="quantity_${productId}" id="quantity-${productId}" required="True" min="1"
-                       value="1"/>
-                `;
-                container.appendChild(div);
+                productIds.forEach(function (productId) {
+                    let productName = productData[productId];
+                    let div = document.createElement('div');
+                    div.classList.add('form-group');
+                    div.innerHTML = `
+                        <label for="quantity-${productId}" style="font-size: 14px; color: #333; font-weight: 500;">Quantity for ${productName}</label>
+                        <input type="number" name="quantity_${productId}" id="quantity-${productId}" required="True" min="1" value="1"
+                               style="padding: 8px; border: 1px solid #dcdcdc; border-radius: 4px; font-size: 14px; color: #555; background-color: #f9f9f9; width: 120px;"/>
+                    `;
+                    container.appendChild(div);
                 });
-                });
-            </script>
-        </t>
-    </template>
+            });
+        </script>
+    </t>
+</template>
 
 
-    <template id="sale_order_success" name="Sale Order Success">
-        <t t-call="website.layout">
-            <div class="container">
-                <h1>Sale Order Created Successfully!</h1>
-                <p>Your sale order has been created.</p>
-                <a href="/sale_order/new" class="btn btn-success">Create Another Order</a>
-            </div>
-        </t>
-    </template>
+
+<!--    <template id="sale_order_success" name="Sale Order Success">-->
+<!--        <t t-call="website.layout">-->
+<!--            <div class="container">-->
+<!--                <h1>Sale Order Created Successfully!</h1>-->
+<!--                <p>Your sale order has been created.</p>-->
+<!--                <a href="/sale_order/new" class="btn btn-success">Create Another Order</a>-->
+<!--            </div>-->
+<!--        </t>-->
+<!--    </template>-->
 
 </odoo>
