@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<!--    Users menu portal-->
+
+       <template id="portal_my_home_users_portal" name="Show Users" inherit_id="portal.portal_my_home" priority="2">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-if="request.env.user.has_group('sales_team.group_sale_manager') or
+                      request.env.user.has_group('sales_module_portal.group_sale_manager_portal')">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="placeholder_count" t-value="'user_count_portal'"/>
+                <t t-set="title">Users</t>
+                <t t-set="text">Manage Users</t>
+                <t t-set="url" t-value="'/my/users'"/>
+            </t>
+            </t>
+        </div>
+
+    </template>
+</odoo>

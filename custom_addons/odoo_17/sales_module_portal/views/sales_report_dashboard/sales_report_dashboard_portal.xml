@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<!--    <template id="portal_my_home_sales_report_dashboard" inherit_id="portal.portal_my_home">-->
+<!--        <xpath expr="//*[hasclass('o_portal_my_home')]" position="before">-->
+<!--            <owl-component name="sales_module_portal.sale_report_dashboard"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>

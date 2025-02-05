@@ -1,0 +1,80 @@
+<odoo>
+    <template id="user_portal_form_view" name="User Info">
+        <t t-call="portal.portal_layout">
+            <!--            <t t-set="breadcrumbs_searchbar" t-value="True"/>-->
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">User Details</t>
+            </t>
+
+            <div t-if="not doc" class="alert alert-warning" role="alert">
+                This user does not exist.
+            </div>
+
+            <t t-if="doc">
+                <div class="user-details">
+                    <h3>User Details</h3>
+                    <p>
+                        <strong>Name:</strong>
+                        <t t-out="doc.name"/>
+                    </p>
+                    <p>
+                        <strong>Email:</strong>
+                        <t t-out="doc.email"/>
+                    </p>
+                    <p>
+                        <strong>Login:</strong>
+                        <t t-out="doc.login"/>
+                    </p>
+                    <p>
+                        <strong>Active:</strong>
+                        <t t-out="doc.active and 'Yes' or 'No'"/>
+                    </p>
+
+                    <h4>Manage Groups</h4>
+                    <form action="/user/group/assign" method="post">
+                        <input type="hidden" name="user_id" t-att-value="doc.id"/>
+
+                        <label for="group_select">Select Group:</label>
+                        <select name="group_id" id="group_select" required="True">
+                            <t t-foreach="sales_groups" t-as="group">
+                                <option t-att-value="group['id']">
+                                    <t t-esc="group['name']"/>
+                                </option>
+                            </t>
+                        </select>
+
+                        <button type="submit" name="action" value="add" class="btn btn-success">Add</button>
+                        <button type="submit" name="action" value="remove" class="btn btn-danger">Remove</button>
+                    </form>
+
+                    <h4>Sales Groups</h4>
+                    <t t-if="sales_groups">
+                        <ul>
+                            <t t-foreach="sales_groups" t-as="group">
+                                <li>
+                                    <t t-if="group['value']">
+                                        <t t-out="group['name']"/>
+                                    </t>
+
+                                </li>
+                            </t>
+                        </ul>
+                    </t>
+
+                    <!--                    <h4>Groups</h4>-->
+                    <!--                    <t t-if="user_groups">-->
+                    <!--                        <ul>-->
+                    <!--                            <t t-foreach="user_groups" t-as="group">-->
+                    <!--                                <li><t t-out="group.name"/></li>-->
+                    <!--                            </t>-->
+                    <!--                        </ul>-->
+                    <!--                    </t>-->
+<!--                    <t t-if="not user_groups">-->
+<!--                        <p>This user is not part of any groups.</p>-->
+<!--                    </t>-->
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

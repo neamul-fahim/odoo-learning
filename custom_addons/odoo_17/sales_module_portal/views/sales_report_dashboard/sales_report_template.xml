@@ -1,0 +1,7 @@
+<odoo>
+    <template id="sales_report_template" name="Users">
+        <t t-call-assets="web.assets_frontend" />
+        <p>Sales Report Dashboard</p>
+        <owl-component name="sales_module_portal.sale_report_dashboard"/>
+    </template>
+</odoo>

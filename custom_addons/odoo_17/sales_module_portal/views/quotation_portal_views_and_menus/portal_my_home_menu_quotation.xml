@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+<!--    Quotation menu portal-->
+
+       <template id="portal_my_home_sale_quotation" name="Show Quotations" inherit_id="portal.portal_my_home" priority="3">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="before">
+            <t t-set="portal_client_category_enable" t-value="True"/>
+<!--            <t t-set="portal_alert_category_enable" t-value="False"/>-->
+
+        </xpath>
+        <div id="portal_client_category" position="inside">
+            <t t-if="request.env.user.has_group('sales_team.group_sale_manager') or
+                      request.env.user.has_group('sales_team.group_sale_salesman_all_leads') or
+                      request.env.user.has_group('sales_module_portal.group_sale_salesman_portal') or
+                      request.env.user.has_group('sales_module_portal.group_sale_salesman_all_leads_portal') or
+                      request.env.user.has_group('sales_module_portal.group_sale_manager_portal')">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="placeholder_count" t-value="'quotation_count_portal'"/>
+                <t t-set="title">Quotations to review</t>
+                <t t-set="text">Follow and create your quotations</t>
+                <t t-set="url" t-value="'/my/all_sales'"/>
+            </t>
+            </t>
+        </div>
+
+    </template>
+</odoo>
