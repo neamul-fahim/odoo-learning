@@ -36,6 +36,7 @@ class PatientBill(models.Model):
         """Marks the selected bills as paid."""
         for bill in self:
             bill.is_paid = True
+            bill.bill_state = 'paid'
 
     def action_print_report(self):
         self.ensure_one()  # Ensure only one record is selected

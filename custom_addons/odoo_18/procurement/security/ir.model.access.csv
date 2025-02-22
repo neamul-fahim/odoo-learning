@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+procurement.access_procurement_order,access_procurement_order,procurement.model_procurement_order,base.group_user,1,1,1,1
+procurement.access_procurement_order_line,access_procurement.order.line,procurement.model_procurement_order_line,base.group_user,1,1,1,1

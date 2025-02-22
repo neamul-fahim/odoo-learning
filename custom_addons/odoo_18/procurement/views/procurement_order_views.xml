@@ -1,0 +1,14 @@
+<odoo>
+     <!-- List View -->
+    <record id="view_procurement_order_tree" model="ir.ui.view">
+        <field name="name">procurement.order.tree</field>
+        <field name="model">procurement.order</field>
+        <field name="arch" type="xml">
+            <list string="Procurement Order">
+                <field name="name"/>
+                <field name="vendor_id" widget='many2one_avatar_user'/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+</odoo>

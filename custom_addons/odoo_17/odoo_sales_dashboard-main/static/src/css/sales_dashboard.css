@@ -1,0 +1,83 @@
+/* Sales Dashboard Styles */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 50px;
+    background-color: #F9FAFB;
+}
+
+.sales-card {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px 15px;
+    text-align: left;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+    position: relative;
+    background-color: var(--bg-color);
+}
+
+.sales-card:hover {
+    background-color: #D1C4E9;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Content Styling */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sales-card h3 {
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+
+.sales-card .sales-card-icon {
+    font-size: 30px;
+}
+
+.card-data {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Background Colors */
+.sales-card.light-blue {
+    --bg-color: #E3F2FD; /* Light Blue */
+}
+
+.sales-card.light-orange {
+    --bg-color: #FFECB3; /* Light Orange */
+}
+
+.sales-card.light-green {
+    --bg-color: #C8E6C9; /* Light Green */
+}
+
+.sales-card.light-purple {
+    --bg-color: #F3E5F5; /* Light Purple */
+}
+
+.sales-card.light-yellow {
+    --bg-color: #FFF9C4; /* Light Yellow */
+}
+
+.sales-card.light-teal {
+    --bg-color: #B2DFDB; /* Light Teal */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .sales-card {
+        width: 100%;
+    }
+}

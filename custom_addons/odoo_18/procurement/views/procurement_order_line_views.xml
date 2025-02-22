@@ -1,0 +1,33 @@
+<odoo>
+
+    <!-- List View -->
+    <record id="view_procurement_order_line_tree" model="ir.ui.view">
+        <field name="name">procurement.order.line.tree</field>
+        <field name="model">procurement.order.line</field>
+        <field name="arch" type="xml">
+            <list string="Procurement Order Lines">
+                <field name="name"/>
+                <field name="quantity"/>
+                <field name="unit_price"/>
+            </list>
+        </field>
+    </record>
+
+    <!--    Form view-->
+    <record id="view_procurement_order_line_form" model="ir.ui.view">
+        <field name="name">procurement.order.line.form</field>
+        <field name="model">procurement.order.line</field>
+        <field name="arch" type="xml">
+            <form string="Procurement Order Line">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="product_id"/>
+                        <field name="quantity"/>
+                        <field name="order_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

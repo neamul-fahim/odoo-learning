@@ -37,9 +37,10 @@
         <field name="state">code</field>
         <field name="code">
             for record in records:
-            record.action_mark_as_paid()
+                record.action_mark_as_paid()
         </field>
     </record>
+
 
     <!-- Action for the doctor model -->
     <record id="action_hospital_doctor" model="ir.actions.act_window">
@@ -51,7 +52,7 @@
     <!--    url action to open an URL from menu-->
     <record id="action_open_url" model="ir.actions.act_url">
         <field name="name">Open Documentation</field>
-        <field name="url">https://www.odoo.com</field>
+        <field name="url">/signup</field>
         <field name="target">new</field>
     </record>
 
