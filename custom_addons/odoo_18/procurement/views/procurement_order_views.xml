@@ -1,5 +1,5 @@
 <odoo>
-     <!-- List View -->
+    <!-- List View -->
     <record id="view_procurement_order_tree" model="ir.ui.view">
         <field name="name">procurement.order.tree</field>
         <field name="model">procurement.order</field>
@@ -11,4 +11,79 @@
             </list>
         </field>
     </record>
+
+
+    <!--    Form view-->
+    <record id="view_procurement_order_form" model="ir.ui.view">
+        <field name="name">procurement.order.form</field>
+        <field name="model">procurement.order</field>
+        <field name="arch" type="xml">
+            <form string="Procurement Order">
+                <header>
+                    <!-- Readonly Status Bar -->
+                    <field name="state" widget="statusbar" readonly="1"/>
+
+                    <button name="send_mail_to_vendor" string="Send Mail" type="object"
+                     class="oe_highlight"
+                     groups="procurement.group_procurement_team"/>
+
+                    <!-- Confirm Button: Only COO can confirm -->
+                    <button name="action_confirm" string="Confirm" type="object"
+                            class="oe_highlight"
+                            groups="procurement.group_coo"
+                            attributes="{'invisible': [('state', '!=', 'draft')]}"/>
+
+                    <!-- Approve Button: Only MD can approve if price > 50,000 -->
+                    <button name="action_approve" string="Approve" type="object"
+                            class="oe_highlight"
+                            groups="procurement.group_coo"
+                            attributes="{'invisible': [('state', '!=', 'confirmed'), ('total_amount', '&gt;=', 50000)]}"/>
+
+                    <button name="action_approve" string="Approve" type="object"
+                            class="oe_highlight"
+                            groups="procurement.group_md"
+                            attributes="{'invisible': [('state', '!=', 'confirmed'), ('total_amount', '&lt;=', 50000)]}"/>
+
+                    <!-- Complete Button: COO and MD can complete -->
+                    <button name="action_complete" string="Complete" type="object"
+                            class="oe_highlight"
+                            groups="procurement.group_coo,procurement.group_md"
+                            attributes="{'invisible': [('state', '!=', 'approved')]}"/>
+
+                    <!-- Cancel Button: Only Procurement Team can cancel -->
+                    <button name="action_cancel" string="Cancel" type="object"
+                            class="btn-danger"
+                            groups="procurement.group_coo,procurement.group_md"
+                            attributes="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="order_date"/>
+                            <field name="vendor_id"/>
+                        </group>
+                        <group>
+                            <field name="active"/>
+                            <field name="total_amount"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="order_line_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
 </odoo>

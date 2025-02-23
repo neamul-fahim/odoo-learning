@@ -1,4 +1,7 @@
-from odoo import models, fields, api
+from email.policy import default
+from odoo import models, fields, api, _
+from odoo.exceptions import UserError
+
 
 class ProcurementOrder(models.Model):
     _name = 'procurement.order'
@@ -14,12 +17,44 @@ class ProcurementOrder(models.Model):
     order_date = fields.Datetime(string='Order Date', default=fields.Datetime.now, required=True)
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('confirm', 'Confirmed'),
+        ('confirmed', 'Confirmed'),
         ('approved', 'Approved'),
         ('completed', 'Completed'),
         ('canceled', 'Canceled')
-    ], string= 'State', default='draft', tracking=True, readonly=True)
+    ], string= 'State', default='draft', tracking=True)
     active = fields.Boolean(string='Active', default=True)
+    total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True, default=0)
+    big_amount = fields.Boolean(string='Big Amount', compute='_compute_big_amount', store=True, default=False)
+
+    def action_confirm(self):
+        if self.state != 'draft':
+            raise UserError(_('Only Draft states can be Confirmed'))
+        self.write({'state': 'confirmed'})
+
+    def action_approve(self):
+        if self.state != 'confirmed':
+            raise UserError(_('Only Confirmed states can be Approved'))
+        self.write({'state': 'approved'})
+
+    def action_complete(self):
+        if self.state != 'approved':
+            raise UserError(_('Only Approved states can be Completed'))
+        self.write({'state': 'completed'})
+
+    def action_cancel(self):
+        if self.state not in ('confirmed', 'approved'):
+            raise UserError(_('Only Confirmed or Approved states can be Canceled'))
+        self.write({'state': 'canceled'})
+
+    @api.depends('order_line_ids.quantity', 'order_line_ids.unit_price')
+    def _compute_total_amount(self):
+        for order in self:
+            order.total_amount = sum(line.quantity * line.unit_price for line in order.order_line_ids)
+
+    @api.depends('total_amount')
+    def _compute_big_amount(self):
+        for order in self:
+            order.big_amount = order.total_amount > 50000
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -49,7 +84,42 @@ class ProcurementOrder(models.Model):
         portal_group_id = self.env.ref('base.group_portal').id
         return [('groups_id', 'in', [portal_group_id])]
 
+    def send_mail_to_vendor(self):
+        for order in self:
+            email = order.vendor_id.email
+            if not email:
+                raise UserError(_('Vendor has no email account'))
 
+            body_html = f"""
+                <div style="font-family: Arial, sans-serif; font-size: 14px; color: #333;">
+                    <p>Dear {order.vendor_id.name},</p>
+
+                    <p>We are pleased to inform you that a new <strong>Procurement Order</strong> has been placed.</p>
+
+                    <h3>Order Details:</h3>
+                    <ul>
+                        <li><strong>Order Reference:</strong> {order.name}</li>
+                        <li><strong>Total Amount:</strong> {order.total_amount} Taka</li>
+                        <li><strong>Order Date:</strong> {order.order_date}</li>
+                    </ul>
+
+                    <p>Please review the order and confirm at your earliest convenience.</p>
+
+                    <p>Best regards,</p>
+                    <p><strong>{self.env.user.name}</strong></p>
+                    <p><em>Procurement Team</em></p>
+                </div>
+            """
+
+            mail_values = {
+                'subject': _("Procurement Order"),
+                'email_to': email,
+                'email_from': 'neamul.fahim@gmail.com',
+                'body_html':body_html
+            }
+
+            mail = self.env['mail.mail'].sudo().create(mail_values)
+            mail.send()
 
 class ProcurementOrderLine(models.Model):
     _name = 'procurement.order.line'
