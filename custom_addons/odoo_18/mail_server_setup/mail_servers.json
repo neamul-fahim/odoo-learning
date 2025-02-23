@@ -3,8 +3,8 @@
         "name": "Gmail SMTP",
         "smtp_host": "smtp.gmail.com",
         "smtp_port": 587,
-        "smtp_user": "neamul.fahim@gmail.com",
-        "smtp_pass": "ktbtwzwwgldgwial",
+        "smtp_user": "runi.poo@gmail.com",
+        "smtp_pass": "dksjdkshgkdhslfs",
         "smtp_encryption": "none"
     }
 
