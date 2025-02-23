@@ -31,30 +31,30 @@
                     <button name="action_confirm" string="Confirm" type="object"
                             class="oe_highlight"
                             groups="procurement.group_coo"
-                            attributes="{'invisible': [('state', '!=', 'draft')]}"/>
+                            invisible="(state != 'draft')"/>
 
                     <!-- Approve Button: Only MD can approve if price > 50,000 -->
                     <button name="action_approve" string="Approve" type="object"
                             class="oe_highlight"
                             groups="procurement.group_coo"
-                            attributes="{'invisible': [('state', '!=', 'confirmed'), ('total_amount', '&gt;=', 50000)]}"/>
+                            invisible="(state != 'confirmed') or (total_amount &gt; 50000)"/>
 
                     <button name="action_approve" string="Approve" type="object"
                             class="oe_highlight"
                             groups="procurement.group_md"
-                            attributes="{'invisible': [('state', '!=', 'confirmed'), ('total_amount', '&lt;=', 50000)]}"/>
+                            invisible="(state != 'confirmed') or (total_amount &lt; 50000)"/>
 
                     <!-- Complete Button: COO and MD can complete -->
                     <button name="action_complete" string="Complete" type="object"
                             class="oe_highlight"
                             groups="procurement.group_coo,procurement.group_md"
-                            attributes="{'invisible': [('state', '!=', 'approved')]}"/>
+                            invisible="(state != 'approved')"/>
 
                     <!-- Cancel Button: Only Procurement Team can cancel -->
                     <button name="action_cancel" string="Cancel" type="object"
                             class="btn-danger"
                             groups="procurement.group_coo,procurement.group_md"
-                            attributes="{'invisible': [('state', 'not in', ['draft'])]}"/>
+                            invisible="(state not in ('confirmed','approved'))"/>
                 </header>
 
                 <sheet>
@@ -63,6 +63,7 @@
                             <field name="name"/>
                             <field name="order_date"/>
                             <field name="vendor_id"/>
+                            <field name="company_id"/>
                         </group>
                         <group>
                             <field name="active"/>

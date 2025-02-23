@@ -9,6 +9,7 @@
                 <field name="name"/>
                 <field name="quantity"/>
                 <field name="unit_price"/>
+                <field name="total_amount"/>
             </list>
         </field>
     </record>
@@ -24,6 +25,7 @@
                         <field name="name" readonly="1"/>
                         <field name="product_id"/>
                         <field name="quantity"/>
+                        <field name="total_amount"/>
                         <field name="order_id" invisible="1"/>
                     </group>
                 </sheet>

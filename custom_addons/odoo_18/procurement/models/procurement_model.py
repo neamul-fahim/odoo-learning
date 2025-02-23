@@ -14,6 +14,10 @@ class ProcurementOrder(models.Model):
         string='Vendor',
         domain=lambda self: self._get_portal_user_domain()
     )
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        string='Billing Company'
+    )
     order_date = fields.Datetime(string='Order Date', default=fields.Datetime.now, required=True)
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -24,7 +28,6 @@ class ProcurementOrder(models.Model):
     ], string= 'State', default='draft', tracking=True)
     active = fields.Boolean(string='Active', default=True)
     total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True, default=0)
-    big_amount = fields.Boolean(string='Big Amount', compute='_compute_big_amount', store=True, default=False)
 
     def action_confirm(self):
         if self.state != 'draft':
@@ -131,7 +134,12 @@ class ProcurementOrderLine(models.Model):
     product_id = fields.Many2one(comodel_name='product.product', string='Product', required=True)
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
     unit_price = fields.Float(string='Unit Price', related='product_id.list_price')
+    total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True, default=0)
 
+    @api.depends('quantity', 'unit_price')
+    def _compute_total_amount(self):
+        for line in self:
+            line.total_amount = line.quantity * line.unit_price
 
     # def name_get(self):
     #     result = []
