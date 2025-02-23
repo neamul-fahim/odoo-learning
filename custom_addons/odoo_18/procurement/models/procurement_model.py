@@ -28,7 +28,25 @@ class ProcurementOrder(models.Model):
     ], string= 'State', default='draft', tracking=True)
     active = fields.Boolean(string='Active', default=True)
     total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True, default=0)
+    coo_signature = fields.Binary("COO Signature", groups="procurement.group_coo")
+    coo_signed_by = fields.Many2one("res.users", string="COO Signed By", readonly=True, store=True,
+                                    compute="_compute_coo_signed_by")
 
+    md_signature = fields.Binary("MD Signature", groups="procurement.group_md")
+    md_signed_by = fields.Many2one("res.users", string="MD Signed By", readonly=True, store=True,
+                                   compute="_compute_md_signed_by")
+
+    @api.depends('coo_signature')
+    def _compute_coo_signed_by(self):
+        for order in self:
+            if order.coo_signature and not order.coo_signed_by:
+                order.coo_signed_by = self.env.user
+
+    @api.depends('md_signature')
+    def _compute_md_signed_by(self):
+        for order in self:
+            if order.md_signature and not order.md_signed_by:
+                order.md_signed_by = self.env.user
     def action_confirm(self):
         if self.state != 'draft':
             raise UserError(_('Only Draft states can be Confirmed'))

@@ -6,111 +6,106 @@
         <field name="report_name">procurement.report_procurement_order</field>
         <field name="binding_model_id" ref="model_procurement_order"/>
     </record>
+<template id="report_procurement_order">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
 
-    <template id="report_procurement_order">
-        <t t-call="web.html_container">
-            <t t-call="web.external_layout">
-                <div class="page">
+                <!-- Header -->
+                <h2 style="text-align: center;">Purchase Order</h2>
 
-                    <!-- Header -->
-                    <h2 style="text-align: center;">Purchase Order</h2>
-
-                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; width: 100%;">
-                        <!-- Vendor Information -->
-                        <table class="table" style="width: 48%; border: 1px solid #000; padding: 10px;">
-                            <tr>
-                                <td style="vertical-align: top; padding: 10px;">
-                                    <h4>Vendor Details</h4>
-                                    <p>
-                                        <strong>Name:</strong>
-                                        <t t-esc="docs.vendor_id.name"/>
-                                    </p>
-                                    <p>
-                                        <strong>Email:</strong>
-                                        <t t-esc="docs.vendor_id.email or 'N/A'"/>
-                                    </p>
-                                    <p>
-                                        <strong>Phone:</strong>
-                                        <t t-esc="docs.vendor_id.phone or 'N/A'"/>
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <!-- Billing Company Information -->
-                        <table class="table" style="width: 48%; border: 1px solid #000; padding: 10px;">
-                            <tr>
-                                <td style="vertical-align: top; padding: 10px;">
-                                    <h4>Billing Company</h4>
-                                    <p>
-                                        <strong>Company Name:</strong>
-                                        <t t-esc="docs.company_id.name"/>
-                                    </p>
-                                    <p>
-                                        <strong>Address:</strong>
-                                        <t t-esc="docs.company_id.partner_id.street or 'N/A'"/>
-                                    </p>
-                                    <p>
-                                        <strong>Phone:</strong>
-                                        <t t-esc="docs.company_id.partner_id.phone or 'N/A'"/>
-                                    </p>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!-- Procurement Order Details -->
-                    <h3>Procurement Order Details</h3>
-                    <table class="table table-condensed" style="width: 100%; border-collapse: collapse;">
-                        <thead>
-                            <tr style="background-color: #f2f2f2;">
-                                <th style="border: 1px solid #000; padding: 8px;">Product</th>
-                                <th style="border: 1px solid #000; padding: 8px;">Quantity</th>
-                                <th style="border: 1px solid #000; padding: 8px;">Unit Price</th>
-                                <th style="border: 1px solid #000; padding: 8px;">Subtotal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <t t-foreach="docs.order_line_ids" t-as="line">
-                                <tr>
-                                    <td style="border: 1px solid #000; padding: 8px;">
-                                        <t t-esc="line.product_id.name"/>
-                                    </td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: center;">
-                                        <t t-esc="line.quantity"/>
-                                    </td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
-                                        <t t-esc="line.unit_price"/>
-                                        Taka
-                                    </td>
-                                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
-                                        <t t-esc="line.quantity * line.unit_price"/>
-                                        Taka
-                                    </td>
-                                </tr>
-                            </t>
-                        </tbody>
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; width: 100%;">
+                    <!-- Vendor Information -->
+                    <table class="table" style="width: 48%; border: 1px solid #000; padding: 10px;">
+                        <tr>
+                            <td style="vertical-align: top; padding: 10px;">
+                                <h4>Vendor Details</h4>
+                                <p><strong>Name:</strong> <t t-esc="docs.vendor_id.name"/></p>
+                                <p><strong>Email:</strong> <t t-esc="docs.vendor_id.email or 'N/A'"/></p>
+                                <p><strong>Phone:</strong> <t t-esc="docs.vendor_id.phone or 'N/A'"/></p>
+                            </td>
+                        </tr>
                     </table>
 
-                    <!-- Total Amount -->
-                    <div style="margin-top: 20px; text-align: right;">
-                        <h4>Total Amount:
-                            <t t-esc="docs.total_amount"/>
-                            Taka
-                        </h4>
-                    </div>
-
-                    <!-- Approval Section -->
-                    <div style="margin-top: 30px;">
-                        <p>
-                            <strong>Approved by:</strong>
-                        </p>
-                        <img t-if="docs.state in ('approved', 'completed')"
-                             t-att-src="'/your_module_name/static/src/img/signature.png'" width="150"/>
-                    </div>
-
+                    <!-- Billing Company Information -->
+                    <table class="table" style="width: 48%; border: 1px solid #000; padding: 10px;">
+                        <tr>
+                            <td style="vertical-align: top; padding: 10px;">
+                                <h4>Billing Company</h4>
+                                <p><strong>Company Name:</strong> <t t-esc="docs.company_id.name"/></p>
+                                <p><strong>Address:</strong> <t t-esc="docs.company_id.partner_id.street or 'N/A'"/></p>
+                                <p><strong>Phone:</strong> <t t-esc="docs.company_id.partner_id.phone or 'N/A'"/></p>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-            </t>
+
+                <!-- Procurement Order Details -->
+                <h3>Procurement Order Details</h3>
+                <table class="table table-condensed" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: #f2f2f2;">
+                            <th style="border: 1px solid #000; padding: 8px;">Product</th>
+                            <th style="border: 1px solid #000; padding: 8px;">Quantity</th>
+                            <th style="border: 1px solid #000; padding: 8px;">Unit Price</th>
+                            <th style="border: 1px solid #000; padding: 8px;">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs.order_line_ids" t-as="line">
+                            <tr>
+                                <td style="border: 1px solid #000; padding: 8px;">
+                                    <t t-esc="line.product_id.name"/>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align: center;">
+                                    <t t-esc="line.quantity"/>
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                                    <t t-esc="line.unit_price"/> Taka
+                                </td>
+                                <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                                    <t t-esc="line.quantity * line.unit_price"/> Taka
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <!-- Total Amount -->
+                <div style="margin-top: 20px; text-align: right;">
+                    <h4>Total Amount: <t t-esc="docs.total_amount"/> Taka</h4>
+                </div>
+
+                <!-- Signature Section -->
+                <div style="margin-top: 50px; display: flex; justify-content: space-between; width: 100%;">
+                    <!-- COO Signature (Bottom Left) -->
+                    <div style="text-align: left; width: 45%;">
+                        <p><strong>COO Signature:</strong></p>
+                        <t t-if="docs.sudo().coo_signature">
+                            <img t-att-src="'data:image/png;base64,%s' % docs.coo_signature.decode('utf-8')" width="150"/>
+                            <p><strong>Signed by:</strong> <t t-esc="docs.coo_signed_by.name or 'N/A'"/></p>
+                        </t>
+                        <t t-else="">
+                            <p style="color: red;">Not signed yet</p>
+                        </t>
+                    </div>
+
+                    <!-- MD Signature (Bottom Right) -->
+                    <div style="text-align: right; width: 45%;">
+                        <p><strong>MD Signature:</strong></p>
+                        <t t-if="docs.sudo().md_signature">
+                            <img t-att-src="'data:image/png;base64,%s' % docs.md_signature.decode('utf-8')" width="150"/>
+                            <p><strong>Signed by:</strong> <t t-esc="docs.md_signed_by.name or 'N/A'"/></p>
+                        </t>
+                        <t t-else="">
+                            <p style="color: red;">Not signed yet</p>
+                        </t>
+                    </div>
+                </div>
+
+            </div>
         </t>
-    </template>
+    </t>
+</template>
+
 </odoo>

@@ -21,8 +21,8 @@
             <field name="category_id" ref="procurement.category_procurement_module"/>
         </record>
 
-        <!--        Access Rights-->
-
+        <!--        Access Rights for procurement.order and procurement.order-->
+<!--        -->
         <record id="access_procurement_team" model="ir.model.access">
             <field name="name">Procurement Team Access</field>
             <field name="model_id" ref="model_procurement_order"/>

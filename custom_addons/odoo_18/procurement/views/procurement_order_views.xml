@@ -81,8 +81,31 @@
                                 </list>
                             </field>
                         </page>
+                        <page string="Signatures">
+                            <group>
+                                <!-- COO Signature Section: Only available to users in group_coo -->
+                                <group string="COO Signature" groups="procurement.group_coo">
+                                    <field name="coo_signed_by" readonly="1"/>
+                                    <field name="coo_signature" widget="signature"/>
+                                </group>
+                                <group string="COO Signature" >
+                                    <field name="coo_signed_by" readonly="1"/>
+                                    <field name="coo_signature"  readonly="1"/>
+                                </group>
+                                <!-- MD Signature Section: Only available to users in group_md -->
+                                <group string="MD Signature" groups="procurement.group_md">
+                                    <field name="md_signed_by" readonly="1"/>
+                                    <field name="md_signature" widget="signature"/>
+                                </group>
+                                <group string="MD Signature" groups="procurement.group_procurement_team">
+                                    <field name="md_signed_by" readonly="1"/>
+                                    <field name="md_signature" readonly="1"/>
+                                </group>
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
+
             </form>
         </field>
     </record>
