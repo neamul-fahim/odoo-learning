@@ -1,0 +1,43 @@
+<odoo>
+    <template id="procurement_order_tree_view_portal" name="My Procurement Orders">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Procurement Orders</t>
+            </t>
+
+            <div t-if="not procurement_orders" class="alert alert-warning" role="alert">
+                There are currently no procurement_orders for your account.
+            </div>
+            <t t-if="procurement_orders" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+<!--                        <th>Quotation Id</th>-->
+                        <th>Quotation #</th>
+                        <th class="text-end">Quotation Date</th>
+                        <th class="text-end">Status</th>
+                        <th class="text-end">Total</th>
+                    </tr>
+                </thead>
+                <t t-foreach="procurement_orders" t-as="order">
+                    <tr>
+
+                        <td><a t-att-href="'/my/procurement_order/' + str(order.id)"><t t-out="order.name"/></a></td>
+
+                        <td class="text-end">
+                            <span t-field="order.order_date"/>
+                        </td>
+                        <td class="text-end">
+                            <span t-field="order.state"/>
+                        </td>
+                        <td class="text-end">
+                            <span t-field="order.total_amount"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

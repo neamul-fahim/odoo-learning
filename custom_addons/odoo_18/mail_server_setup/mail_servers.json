@@ -1,12 +1,11 @@
+
 [
     {
         "name": "Gmail SMTP",
         "smtp_host": "smtp.gmail.com",
-        "smtp_port": 587,
-        "smtp_user": "runi.poo@gmail.com",
+        "smtp_port": 465,
+        "smtp_user": "runi.pie@gmail.com",
         "smtp_pass": "dksjdkshgkdhslfs",
-        "smtp_encryption": "none"
+        "smtp_encryption": "ssl"
     }
-
 ]
-

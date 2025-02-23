@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="procurement_order_form_view_portal">
+        <t t-call="portal.portal_layout">
+<!--            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>-->
+
+            <!-- Partner Information -->
+            <style>
+                .order-form {
+                font-family: Arial, sans-serif;
+                color: #333;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                .order-form h2 {
+                font-size: 24px;
+                color: #0056b3;
+                margin-bottom: 15px;
+                }
+                .order-form strong {
+                font-weight: bold;
+                }
+                .order-form p {
+                margin: 5px 0;
+                font-size: 14px;
+                }
+                .order-form .address-info {
+                margin-bottom: 15px;
+                }
+                .order-form table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 15px;
+                margin-bottom: 20px;
+                }
+                .order-form table th,
+                .order-form table td {
+                padding: 8px 12px;
+                border: 1px solid #ddd;
+                text-align: left;
+                font-size: 14px;
+                }
+                .order-form table th {
+                background-color: #f1f1f1;
+                }
+                .order-form .total {
+                margin-top: 15px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #333;
+                }
+                .order-form .signature img {
+                max-width: 150px;
+                max-height: 100px;
+                border: 1px solid #ddd;
+                margin-top: 15px;
+                }
+            </style>
+
+            <div class="order-form">
+
+                <!-- Status Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; font-family: Arial, sans-serif;">
+
+                    <div class="status_bar" style="display: flex;">
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'draft' and '00bfff' or 'f1f1f1'}; color: #{procurement_order.state == 'draft' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'draft' and 'bold' or 'normal'}; border-radius: 4px 0 0 4px;">
+                            Draft
+                        </div>
+
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'confirmed' and 'ff6f00' or 'f1f1f1'}; color: #{procurement_order.state == 'sent' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'sent' and 'bold' or 'normal'}; border-left: none;">
+                            Confirmed
+                        </div>
+
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'approved' and '32cd32' or 'f1f1f1'}; color: #{procurement_order.state == 'sale' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'sale' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
+                            Approved
+                        </div>
+                        <t t-if="procurement_order.state=='cancel'">
+                            <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'canceled' and 'red' or 'f1f1f1'}; color: #{procurement_order.state == 'cancel' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'cancel' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
+                                Cancelled
+                            </div>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Partner Information -->
+                <div>
+                    <div t-field="procurement_order.vendor_id.name"/>
+                    <!--                    <p t-if="doc.partner_id.vat">Tax ID:-->
+                    <!--                        <span t-field="doc.partner_id.vat"/>-->
+                    <!--                    </p>-->
+                </div>
+
+                <!-- Address Information -->
+                <t t-if="procurement_order.vendor_id">
+                    <div class="address-info">
+                        <strong>Vendor Name:</strong>
+                        <div t-field="procurement_order.vendor_id.name"/>
+
+                        <strong>Vendor Address:</strong>
+                        <div t-field="procurement_order.vendor_id.contact_address"/>
+
+                        <strong>Vendor Email:</strong>
+                        <div t-field="procurement_order.vendor_id.email"/>
+
+                        <strong>Vendor Phone:</strong>
+                        <div t-field="procurement_order.vendor_id.phone"/>
+                    </div>
+                </t>
+
+
+                <!-- Document Title -->
+                <h2>
+                    <span >Procurement Order #</span>
+                    <span t-field="procurement_order.name"/>
+                </h2>
+
+                <!-- Document Information -->
+<!--                <div>-->
+<!--                    <div t-if="procurement_order.client_order_ref">-->
+<!--                        <strong>Your Reference:</strong>-->
+<!--                        <span t-field="doc.client_order_ref"/>-->
+<!--                    </div>-->
+<!--                    <div t-if="doc.date_order">-->
+<!--                        <strong t-if="doc.state in ['draft', 'sent']">Quotation Date:</strong>-->
+<!--                        <strong t-else="">Order Date:</strong>-->
+<!--                        <span t-field="doc.date_order" t-options='{"widget": "date"}'/>-->
+<!--                    </div>-->
+<!--                    <div t-if="doc.validity_date and doc.state in ['draft', 'sent']">-->
+<!--                        <strong>Expiration:</strong>-->
+<!--                        <span t-field="doc.validity_date"/>-->
+<!--                    </div>-->
+<!--                    <div t-if="doc.user_id.name">-->
+<!--                        <strong>Salesperson:</strong>-->
+<!--                        <span t-field="doc.user_id"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <!-- Order Lines -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="procurement_order.order_line_ids" t-as="line">
+                            <tr>
+                                <td>
+                                    <span t-field="line.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.quantity"/>
+                                </td>
+                                <td>
+                                    <span t-field="line.unit_price"/>
+                                </td>
+
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <!-- Total Section -->
+                <div class="total">
+                    <strong>Total:</strong>
+                    <span t-field="procurement_order.total_amount"/>
+                </div>
+
+                <!-- Signature -->
+<!--                <div t-if="doc.signature" class="signature">-->
+<!--                    <strong>Signature:</strong>-->
+<!--                    <img t-att-src="image_data_uri(doc.signature)"/>-->
+<!--                </div>-->
+            </div>
+        </t>
+    </template>
+</odoo>

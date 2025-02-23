@@ -27,8 +27,12 @@ Long description of module's purpose
         'views/views.xml',
         'views/templates.xml',
         'views/procurement_order_line_views.xml',
+        'views/procurement_order_tree_view_portal.xml',
+        'views/procurement_order_form_view_portal.xml',
         'views/procurement_order_views.xml',
+        'report/procurement_order_report.xml',
         'views/menus.xml',
+        'views/menu_portal_procuremnt_order.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
