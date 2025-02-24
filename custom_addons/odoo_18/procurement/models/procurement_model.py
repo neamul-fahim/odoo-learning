@@ -6,6 +6,8 @@ from odoo.exceptions import UserError
 class ProcurementOrder(models.Model):
     _name = 'procurement.order'
     _description = 'Procurement Order Model'
+    _inherit = ['mail.thread','mail.activity.mixin']
+
 
     name = fields.Char(string='Order Reference', required=True)
     order_line_ids = fields.One2many(comodel_name='procurement.order.line', inverse_name='order_id', string='Order Lines')
@@ -28,11 +30,11 @@ class ProcurementOrder(models.Model):
     ], string= 'State', default='draft', tracking=True)
     active = fields.Boolean(string='Active', default=True)
     total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True, default=0)
-    coo_signature = fields.Binary("COO Signature", groups="procurement.group_coo")
+    coo_signature = fields.Binary("COO Signature")
     coo_signed_by = fields.Many2one("res.users", string="COO Signed By", readonly=True, store=True,
                                     compute="_compute_coo_signed_by")
 
-    md_signature = fields.Binary("MD Signature", groups="procurement.group_md")
+    md_signature = fields.Binary("MD Signature")
     md_signed_by = fields.Many2one("res.users", string="MD Signed By", readonly=True, store=True,
                                    compute="_compute_md_signed_by")
 
@@ -79,7 +81,15 @@ class ProcurementOrder(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        """Override create method to handle order lines properly in batch"""
+
+        # Enforce field-level permissions on coo_signature and md_signature
+        for vals in vals_list:
+            if 'coo_signature' in vals:
+                if not self.env.user.has_group('procurement.group_coo'):
+                    raise UserError(_('You are not allowed to set the COO Signature.'))
+            if 'md_signature' in vals:
+                if not self.env.user.has_group('procurement.group_md'):
+                    raise UserError(_('You are not allowed to set the MD Signature.'))
 
         order_lines_map = {}  # Dictionary to store order-line mappings
         for idx, vals in enumerate(vals_list):
@@ -152,12 +162,12 @@ class ProcurementOrderLine(models.Model):
     product_id = fields.Many2one(comodel_name='product.product', string='Product', required=True)
     quantity = fields.Float(string='Quantity', default=1.0, required=True)
     unit_price = fields.Float(string='Unit Price', related='product_id.list_price')
-    total_amount = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True, default=0)
+    total_amount_per_product = fields.Float(string='Total Amount', compute='_compute_total_amount', store=True)
 
     @api.depends('quantity', 'unit_price')
     def _compute_total_amount(self):
         for line in self:
-            line.total_amount = line.quantity * line.unit_price
+            line.total_amount_per_product = line.quantity * line.unit_price
 
     # def name_get(self):
     #     result = []

@@ -2,7 +2,7 @@
 <odoo>
     <template id="procurement_order_form_view_portal">
         <t t-call="portal.portal_layout">
-<!--            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>-->
+            <!--            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>-->
 
             <!-- Partner Information -->
             <style>
@@ -65,23 +65,33 @@
                 <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; font-family: Arial, sans-serif;">
 
                     <div class="status_bar" style="display: flex;">
-                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'draft' and '00bfff' or 'f1f1f1'}; color: #{procurement_order.state == 'draft' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'draft' and 'bold' or 'normal'}; border-radius: 4px 0 0 4px;">
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'draft' and 'gray' or 'f1f1f1'}; color: #{procurement_order.state == 'draft' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'draft' and 'bold' or 'normal'}; border-radius: 4px 0 0 4px;">
                             Draft
                         </div>
 
-                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'confirmed' and 'ff6f00' or 'f1f1f1'}; color: #{procurement_order.state == 'sent' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'sent' and 'bold' or 'normal'}; border-left: none;">
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'confirmed' and 'purple' or 'f1f1f1'}; color: #{procurement_order.state == 'confirmed' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'confirmed' and 'bold' or 'normal'}; border-left: none;">
                             Confirmed
                         </div>
 
-                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'approved' and '32cd32' or 'f1f1f1'}; color: #{procurement_order.state == 'sale' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'sale' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'approved' and 'green' or 'f1f1f1'}; color: #{procurement_order.state == 'approved' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'approved' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
                             Approved
                         </div>
-                        <t t-if="procurement_order.state=='cancel'">
-                            <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'canceled' and 'red' or 'f1f1f1'}; color: #{procurement_order.state == 'cancel' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'cancel' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
-                                Cancelled
-                            </div>
-                        </t>
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'completed' and 'yellow' or 'f1f1f1'}; color: #{procurement_order.state == 'completed' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'completed' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
+                            Completed
+                        </div>
+                        <div t-attf-style="padding: 10px 20px; border: 1px solid #ccc; background-color: #{procurement_order.state == 'canceled' and 'red' or 'f1f1f1'}; color: #{procurement_order.state == 'canceled' and 'black' or '#000'}; font-weight: #{procurement_order.state == 'canceled' and 'bold' or 'normal'}; border-radius: 0 4px 4px 0;">
+                            Cancelled
+                        </div>
                     </div>
+                </div>
+                <div style="padding: 20px 0px 10px 0px">
+                    <t t-if="procurement_order.state == 'approved'">
+                        <a t-att-href="'/procurement_order/report/pdf/' + str(procurement_order.id)"
+                           class="btn btn-primary"
+                           target="_blank">
+                            Download Report
+                        </a>
+                    </t>
                 </div>
 
                 <!-- Partner Information -->
@@ -112,30 +122,10 @@
 
                 <!-- Document Title -->
                 <h2>
-                    <span >Procurement Order #</span>
+                    <span>Procurement Order #</span>
                     <span t-field="procurement_order.name"/>
                 </h2>
 
-                <!-- Document Information -->
-<!--                <div>-->
-<!--                    <div t-if="procurement_order.client_order_ref">-->
-<!--                        <strong>Your Reference:</strong>-->
-<!--                        <span t-field="doc.client_order_ref"/>-->
-<!--                    </div>-->
-<!--                    <div t-if="doc.date_order">-->
-<!--                        <strong t-if="doc.state in ['draft', 'sent']">Quotation Date:</strong>-->
-<!--                        <strong t-else="">Order Date:</strong>-->
-<!--                        <span t-field="doc.date_order" t-options='{"widget": "date"}'/>-->
-<!--                    </div>-->
-<!--                    <div t-if="doc.validity_date and doc.state in ['draft', 'sent']">-->
-<!--                        <strong>Expiration:</strong>-->
-<!--                        <span t-field="doc.validity_date"/>-->
-<!--                    </div>-->
-<!--                    <div t-if="doc.user_id.name">-->
-<!--                        <strong>Salesperson:</strong>-->
-<!--                        <span t-field="doc.user_id"/>-->
-<!--                    </div>-->
-<!--                </div>-->
 
                 <!-- Order Lines -->
                 <table>
@@ -170,11 +160,7 @@
                     <span t-field="procurement_order.total_amount"/>
                 </div>
 
-                <!-- Signature -->
-<!--                <div t-if="doc.signature" class="signature">-->
-<!--                    <strong>Signature:</strong>-->
-<!--                    <img t-att-src="image_data_uri(doc.signature)"/>-->
-<!--                </div>-->
+
             </div>
         </t>
     </template>

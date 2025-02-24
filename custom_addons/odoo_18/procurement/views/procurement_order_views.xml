@@ -24,8 +24,8 @@
                     <field name="state" widget="statusbar" readonly="1"/>
 
                     <button name="send_mail_to_vendor" string="Send Mail" type="object"
-                     class="oe_highlight"
-                     groups="procurement.group_procurement_team"/>
+                            class="oe_highlight"
+                            groups="procurement.group_procurement_team"/>
 
                     <!-- Confirm Button: Only COO can confirm -->
                     <button name="action_confirm" string="Confirm" type="object"
@@ -88,24 +88,25 @@
                                     <field name="coo_signed_by" readonly="1"/>
                                     <field name="coo_signature" widget="signature"/>
                                 </group>
-                                <group string="COO Signature" >
+                                <group string="COO Signature" groups="procurement.group_procurement_team,procurement.group_md">
                                     <field name="coo_signed_by" readonly="1"/>
-                                    <field name="coo_signature"  readonly="1"/>
+                                    <field name="coo_signature" widget="signature" readonly="1"/>
                                 </group>
                                 <!-- MD Signature Section: Only available to users in group_md -->
                                 <group string="MD Signature" groups="procurement.group_md">
                                     <field name="md_signed_by" readonly="1"/>
                                     <field name="md_signature" widget="signature"/>
                                 </group>
-                                <group string="MD Signature" groups="procurement.group_procurement_team">
+                                <group string="MD Signature" groups="procurement.group_procurement_team,procurement.group_coo">
                                     <field name="md_signed_by" readonly="1"/>
-                                    <field name="md_signature" readonly="1"/>
+                                    <field name="md_signature" widget="signature" readonly="1"/>
                                 </group>
                             </group>
                         </page>
+
                     </notebook>
                 </sheet>
-
+              
             </form>
         </field>
     </record>

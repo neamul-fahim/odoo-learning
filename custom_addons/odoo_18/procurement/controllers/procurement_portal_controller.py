@@ -79,77 +79,23 @@ class ProcurementModulePortal(CustomerPortal):
 
         return http.request.render('procurement.procurement_order_form_view_portal', vals)
 
+    @http.route(['/procurement_order/report/pdf/<int:order_id>'], type='http', auth="public", website=True)
+    def procurement_order_report_pdf(self, order_id, **kwargs):
+        # Load the procurement order with sudo() to bypass record rules.
+        order = request.env['procurement.order'].sudo().browse(order_id)
+        if not order.exists() or order.state != 'approved':
+            return request.not_found()
 
-    # @http.route('/sale_order/new', type='http', auth='user', website=True)
-    # def sale_order_form(self, **kwargs):
-    #     customers = request.env['res.partner'].sudo().search([])
-    #     products = request.env['product.product'].sudo().search([])
-    #     return request.render('sales_module_portal.sale_order_create_update_form_view', {
-    #         'customers': customers,
-    #         'products': products
-    #     })
-    #
-    # @http.route('/sale_order/create', type='http', auth='user', methods=['POST'], website=True, csrf=True)
-    # def create_sale_order(self, **post):
-    #     customer_id = int(post.get('customer_id'))
-    #     product_ids = request.httprequest.form.getlist('product_ids[]')
-    #     # product_ids = post.get('product_ids[]', [])
-    #
-    #     print(f'product==============={product_ids}')
-    #     if not product_ids:
-    #         return request.redirect('/sale_order/failure')
-    #
-    #     # Convert product_ids to integers and handle quantities
-    #     order_lines = []
-    #     for product_id in product_ids:
-    #         product_id = int(product_id)
-    #         quantity = int(post.get(f'quantity_{product_id}', 1))  # Get quantity for each product
-    #
-    #         order_line_values = (0, 0, {
-    #             'product_id': product_id,
-    #             'product_uom_qty': quantity,
-    #             'price_unit': request.env['product.product'].sudo().browse(product_id).list_price
-    #         })
-    #
-    #         order_lines.append(order_line_values)
-    #
-    #     # Create the sale order
-    #     sale_order = request.env['sale.order'].sudo().create({
-    #         'partner_id': customer_id,
-    #         'order_line': order_lines,
-    #     })
-    #
-    #     return request.redirect(f'/my/sale_order/{sale_order.id}')
-    #
-    # # @http.route('/sale_order/success', type='http', auth='user', website=True)
-    # # def sale_order_success(self):
-    # #     return request.render('sales_module_portal.sale_order_success')
-    #
-    # @http.route('/sale_order/update_state', type='http', auth='user', methods=['POST'], website=True, csrf=True)
-    # def update_sale_order_state(self, **post):
-    #     order_id = int(post.get('order_id'))
-    #     new_state = post.get('new_state')
-    #     # Fetch the sale order using the provided order_id
-    #     sale_order = request.env['sale.order'].sudo().browse(order_id)
-    #
-    #     # Check if the order exists
-    #     if not sale_order:
-    #         return request.redirect('/sale_order/error')
-    #
-    #     # Check if the new_state is valid
-    #     valid_states = ['draft', 'sent', 'sale', 'cancel']
-    #     if new_state not in valid_states:
-    #         return request.redirect('/sale_order/error')
-    #
-    #     # Update the state of the sale order
-    #     sale_order.write({'state': new_state})
-    #     sale_order_record = http.request.env['sale.order'].sudo().browse(order_id)
-    #     if not sale_order_record.exists():
-    #         return http.request.not_found()
-    #     vals = {
-    #         'doc': sale_order_record,
-    #         'page_name': 'sale_order',
-    #     }
-    #
-    #     # Redirect back to the quotations page or show success message
-    #     return http.request.render('sales_module_portal.sale_order_portal_form_view', vals)
+        # Retrieve the report action record using sudo() on the environment.
+        report_action = request.env.ref('procurement.action_procurement_order_report').sudo()
+        # Render the PDF report.
+        pdf, _ = report_action._render_qweb_pdf(report_action.report_name, [order_id])
+
+        # Set response headers to force the browser to download the PDF.
+        headers = [
+            ('Content-Type', 'application/pdf'),
+            ('Content-Length', len(pdf)),
+            ('Content-Disposition', 'attachment; filename="procurement_order_%s.pdf"' % order_id),
+        ]
+        return request.make_response(pdf, headers=headers)
+
