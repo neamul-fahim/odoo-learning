@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+my_awesome_dashboard.access_todo_list,access_todo_list,my_awesome_dashboard.model_todo_list,base.group_user,1,1,1,1

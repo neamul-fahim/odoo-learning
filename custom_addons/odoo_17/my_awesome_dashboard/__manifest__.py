@@ -19,12 +19,17 @@
     'depends': ['base', 'web', 'mail', 'crm'],
 
     'data': [
+        'security/ir.model.access.csv',
         'views/views.xml',
 
     ],
     'assets': {
         'web.assets_backend': [
-            'my_awesome_dashboard/static/src/**/*',
+            'my_awesome_dashboard/static/src/dashboard/**/*',
+            'my_awesome_dashboard/static/src/global_or_shared_state/**/*',
+            'my_awesome_dashboard/static/src/todo_list/*.js',
+            'my_awesome_dashboard/static/src/todo_list/*.xml',
+            # 'my_awesome_dashboard/static/src/todo_list/*.scss',
         ],
 
     },
