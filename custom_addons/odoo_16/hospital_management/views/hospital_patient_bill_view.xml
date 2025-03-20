@@ -8,6 +8,11 @@
         <field name="arch" type="xml">
             <tree string="Patient Bills" decoration-bf="is_paid" decoration-success="bill_state == 'paid'"
                   decoration-danger="bill_state == 'unpaid'" decoration-info="bill_state == 'in_process'" multi_edit="1"> <!-- decoration-bf marks the records in 'bold' that are paid -->
+                <header>
+                <button name="%(hospital_management.action_all_patient_total_bill)d" string="All patient bill report (action button)"
+                        type="action"
+                        class="btn-primary" confirm="Are you sure to print report?" help="Print a pdf report"/>
+                </header>
                 <field name="patient_id" optional="show" widget="many2one_avatar"/>
                 <field name="billable_amount" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
                 <field name="discount" optional="show"/>

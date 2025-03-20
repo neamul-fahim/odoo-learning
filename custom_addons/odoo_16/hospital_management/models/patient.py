@@ -45,7 +45,7 @@ class HospitalPatient(models.Model):
     def create(self,vals_list):
         for val in vals_list:
             if val.get('patient_sequence','New') == 'New':
-                val['patient_sequence'] = self.env['ir.sequence'].next_by_code('hospital.patient') or 'New'
+                val['patient_sequence'] = self.env['ir.sequence'].next_by_code('hospital_management.hospital.patient') or 'New'
             name_parts = val['name'].split(' ')
             # capitalizes name and adds 'San' at the end of the name
             val['name'] = ' '.join([string.capitalize() for string in name_parts]) + ' San'

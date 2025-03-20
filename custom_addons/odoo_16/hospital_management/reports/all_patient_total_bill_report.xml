@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <record id="action_all_patient_total_bill" model="ir.actions.report">
+            <field name="name">All Patient Bill</field>
+            <field name="model">hospital.patient.bill</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hospital_management.all_patient_total_bill_template</field>
+            <field name="report_file">hospital_management.all_patient_total_bill_template</field>
+            <field name="binding_model_id" ref="hospital_management.model_hospital_patient_bill"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+
+
+
+    <template id="all_patient_total_bill_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 style="text-align: center;">Cumulative Patient Bill Report</h2>
+
+                    <!-- Table for Individual Records -->
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Patient Name</th>
+                                <th>Billable Amount</th>
+                                <th>Discount (%)</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total_billable" t-value="0"/>
+                            <t t-set="total_discount" t-value="0"/>
+                            <t t-set="total_amount" t-value="0"/>
+
+                            <t t-foreach="docs" t-as="bill">
+                                <tr>
+                                    <td><t t-esc="bill.patient_id.name"/></td>
+                                    <td><t t-esc="'%.2f' % bill.billable_amount"/> <t t-esc="bill.currency_id.symbol"/></td>
+                                    <td><t t-esc="bill.discount"/></td>
+                                    <td><t t-esc="'%.2f' % bill.total_amount"/> <t t-esc="bill.currency_id.symbol"/></td>
+                                    <td><t t-esc="'Paid' if bill.is_paid else 'Unpaid'"/></td>
+                                </tr>
+
+                                <!-- Accumulate Totals -->
+                                <t t-set="total_billable" t-value="total_billable + bill.billable_amount"/>
+                                <t t-set="total_discount" t-value="total_discount + bill.discount"/>
+                                <t t-set="total_amount" t-value="total_amount + bill.total_amount"/>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <!-- Summary Section -->
+                    <h3 style="text-align: right;">Total Summary</h3>
+                    <table class="table table-sm">
+                        <tr>
+                            <td><strong>Total Billable Amount:</strong></td>
+                            <td><t t-esc="'%.2f' % total_billable"/> <t t-esc="docs[0].currency_id.symbol"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Discount:</strong></td>
+                            <td><t t-esc="'%.2f' % total_discount"/> %</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Amount:</strong></td>
+                            <td><t t-esc="'%.2f' % total_amount"/> <t t-esc="docs[0].currency_id.symbol"/></td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+
